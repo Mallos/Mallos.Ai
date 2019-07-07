@@ -1,13 +1,17 @@
-﻿namespace Mallos.Ai.SadRogue
+﻿namespace Mallos.Ai
 {
     using GoRogue.GameFramework;
+    using SadConsole;
 
-    public class RogueBlackboard<T> : Blackboard
+    public class RogueBlackboard : Blackboard
     {
-        public RogueBlackboard(Map map)
+        public RogueBlackboard(Map map, BasicEntity entity)
         {
             this.Map = map;
+            this.Entity = entity;
         }
+
+        public BasicEntity Entity { get; set; }
 
         public Map Map { get; set; }
     }

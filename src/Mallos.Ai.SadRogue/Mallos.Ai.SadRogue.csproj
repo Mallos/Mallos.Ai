@@ -18,6 +18,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <RootNamespace>Mallos.Ai</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

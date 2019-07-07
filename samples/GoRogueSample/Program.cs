@@ -45,8 +45,10 @@ namespace GoRogueSample
             // Spawn a few mock enemies
             for (int i = 0; i < 10; i++)
             {
-                posToSpawn = Map.WalkabilityView.RandomPosition(true); // Get a location that is walkable
-                var goblin = new BasicEntity(Color.Red, Color.Transparent, 'g', posToSpawn, (int)MapLayer.MONSTERS, isWalkable: true, isTransparent: true);
+                // Get a location that is walkable
+                posToSpawn = Map.WalkabilityView.RandomPosition(true);
+
+                var goblin = new Monster(posToSpawn, Map);
                 Map.AddEntity(goblin);
             }
 
@@ -72,6 +74,14 @@ namespace GoRogueSample
         {
             Map.CalculateFOV(Player.Position, Player.FOVRadius, Radius.SQUARE);
             MapRenderer.CenterViewPortOnPoint(Player.Position);
+
+            foreach (var entity in Map.Entities)
+            {
+                if (entity.Item is Monster monster)
+                {
+                    monster.UpdateAI();
+                }
+            }
         }
 
         private static IGameObject SpawnTerrain(Coord position, bool mapGenValue)
