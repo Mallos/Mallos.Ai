@@ -13,7 +13,7 @@
         /// <param name="walkToKey"></param>
         public NavigateNode(string walkToKey)
         {
-            if (!string.IsNullOrWhiteSpace(walkToKey))
+            if (string.IsNullOrWhiteSpace(walkToKey))
             {
                 throw new ArgumentNullException(nameof(walkToKey));
             }
