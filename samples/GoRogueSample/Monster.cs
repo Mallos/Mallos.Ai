@@ -1,6 +1,5 @@
 ﻿using GoRogue;
 using GoRogue.GameFramework;
-using GoRogue.MapViews;
 using Mallos.Ai;
 using Mallos.Ai.Behavior;
 using Mallos.Ai.Behavior.Composite;
@@ -22,9 +21,6 @@ namespace GoRogueSample
         {
             this.AiBlackboard = new RogueBlackboard(map, this);
             this.BehaviorTree = CreateBehaviorTree();
-
-            this.AiBlackboard.Properties["WalkTo"] = 
-                map.WalkabilityView.RandomPosition(true);
         }
 
         public void UpdateAI()
@@ -39,16 +35,22 @@ namespace GoRogueSample
                     new ActionNode(blackboard =>
                     {
                         // Check if we can see the player.
-
-                        // TODO: Add logic
-                        blackboard.Properties["SeePlayer"] = false;
+                        if (false) // FIXME: Add logic
+                        {
+                            blackboard.Properties["WalkTo"] = new Coord(0, 0);
+                            blackboard.Properties["SeePlayer"] = true;
+                        }
+                        else
+                        {
+                            blackboard.Properties["SeePlayer"] = false;
+                        }
 
                         return BehaviorReturnCode.Success;
                     }),
                     new ConditionalNode(
-                        blackboard => (bool)blackboard.Properties["SeePlayer"],
-                        new NavigateNode(),  // Go to Player
-                        new WanderNode()     // Wander around
+                        blackboard => blackboard.GetProperty<bool>("SeePlayer"),
+                        new NavigateNode("WalkTo"),     // Go to Player
+                        new WanderNode()                // Wander around
                     )
                 )
             );

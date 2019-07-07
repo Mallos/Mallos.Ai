@@ -1,16 +1,33 @@
 ﻿namespace Mallos.Ai.Behavior.Task
 {
+    using System;
     using GoRogue;
 
     public class NavigateNode : BehaviorTreeNode
     {
+        private readonly string walkToKey;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NavigateNode"/> class.
+        /// </summary>
+        /// <param name="walkToKey"></param>
+        public NavigateNode(string walkToKey)
+        {
+            if (!string.IsNullOrWhiteSpace(walkToKey))
+            {
+                throw new ArgumentNullException(nameof(walkToKey));
+            }
+
+            this.walkToKey = walkToKey;
+        }
+
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
-            if (blackboard.Properties.ContainsKey("WalkTo") &&
+            if (blackboard.HasProperty<Coord>(this.walkToKey) &&
                 blackboard is RogueBlackboard rb)
             {
-                var walkTo = (Coord)blackboard.Properties["WalkTo"];
+                var walkTo = blackboard.GetProperty<Coord>(this.walkToKey);
                 if (walkTo == rb.Entity.Position)
                 {
                     return BehaviorReturnCode.Success;
