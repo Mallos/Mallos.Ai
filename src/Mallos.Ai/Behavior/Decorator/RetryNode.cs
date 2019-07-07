@@ -1,0 +1,64 @@
+﻿namespace Mallos.Ai.Behavior.Decorator
+{
+    using System;
+
+    /// <summary>
+    /// A node that retries on <see cref="BehaviorReturnCode.Failure"/>.
+    /// </summary>
+    [BehaviorCategory(BehaviorCategory.Decorator)]
+    public class RetryNode : BehaviorTreeNode, IBehaviorTreeNodeChild
+    {
+        private readonly int maxAttempts;
+        private readonly string attemptKey;
+        private readonly BehaviorReturnCode failureCode;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RetryNode"/> class.
+        /// </summary>
+        /// <param name="child">The child node.</param>
+        /// <param name="maxAttempts">The max attempts this node will be executed.</param>
+        /// <param name="attemptKey">The blackboard property key that will contain the how many attempts have passed.</param>
+        /// <param name="failureCode">The code that will return if exceed max attempts.</param>
+        public RetryNode(
+            BehaviorTreeNode child,
+            int maxAttempts,
+            string attemptKey = null,
+            BehaviorReturnCode failureCode = BehaviorReturnCode.Failure)
+        {
+            if (maxAttempts <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxAttempts));
+            }
+
+            this.Child = child ?? throw new ArgumentNullException(nameof(child));
+            this.maxAttempts = maxAttempts;
+            this.attemptKey = attemptKey;
+            this.failureCode = failureCode;
+        }
+
+        /// <summary>
+        /// Gets the child node.
+        /// </summary>
+        public BehaviorTreeNode Child { get; }
+
+        /// <inheritdoc />
+        protected override BehaviorReturnCode Behave(Blackboard blackboard)
+        {
+            for (int currentAttempts = 0; currentAttempts <= this.maxAttempts; currentAttempts++)
+            {
+                if (!string.IsNullOrWhiteSpace(this.attemptKey))
+                {
+                    blackboard.Properties[this.attemptKey] = currentAttempts;
+                }
+
+                var result = this.Child.Execute(blackboard);
+                if (result != BehaviorReturnCode.Failure)
+                {
+                    return result;
+                }
+            }
+
+            return this.failureCode;
+        }
+    }
+}

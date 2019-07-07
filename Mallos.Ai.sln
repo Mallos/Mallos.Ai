@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{39D7CB70-98D2-4E3C-9D0B-68033E86C586}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mallos.Ai", "src\Mallos.Ai\Mallos.Ai.csproj", "{E4265B32-4B5F-4AA6-AB2A-7D65BC2FCD65}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A7F516EE-B925-4BC2-B35D-9BD1DFE8AC49}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mallos.Ai.Test", "test\Mallos.Ai.Test\Mallos.Ai.Test.csproj", "{4A46715F-08B2-4D28-A168-6D6283F577E7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{686B955D-2972-44E6-9DBD-7BAD6C681387}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E4265B32-4B5F-4AA6-AB2A-7D65BC2FCD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4265B32-4B5F-4AA6-AB2A-7D65BC2FCD65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4265B32-4B5F-4AA6-AB2A-7D65BC2FCD65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4265B32-4B5F-4AA6-AB2A-7D65BC2FCD65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A46715F-08B2-4D28-A168-6D6283F577E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A46715F-08B2-4D28-A168-6D6283F577E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A46715F-08B2-4D28-A168-6D6283F577E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A46715F-08B2-4D28-A168-6D6283F577E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E4265B32-4B5F-4AA6-AB2A-7D65BC2FCD65} = {39D7CB70-98D2-4E3C-9D0B-68033E86C586}
+		{4A46715F-08B2-4D28-A168-6D6283F577E7} = {A7F516EE-B925-4BC2-B35D-9BD1DFE8AC49}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D1D27B2-00B1-4652-A93C-8A352929F9AF}
+	EndGlobalSection
+EndGlobal
