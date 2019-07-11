@@ -32,21 +32,13 @@ namespace GoRogueSample
         {
             return new BehaviorTree(
                 new ParallelSequenceNode(
-                    new ActionNode(blackboard =>
-                    {
-                        // Check if we can see the player.
-                        if (false) // FIXME: Add logic
-                        {
-                            blackboard.Properties["WalkTo"] = new Coord(0, 0);
-                            blackboard.Properties["SeePlayer"] = true;
-                        }
-                        else
-                        {
-                            blackboard.Properties["SeePlayer"] = false;
-                        }
-
-                        return BehaviorReturnCode.Success;
-                    }),
+                    // Check if we can see the player.
+                    new SpotEntityNode(
+                        entity => 5,                    // Entity View Radius.
+                        entity => entity is Player,     // Check if it is a player.
+                        "SeePlayer",                    // Set a blackboard property with true or false.
+                        "WalkTo"                        // Set a blackboard property with the found coords.
+                    ),
                     new ConditionalNode(
                         blackboard => blackboard.GetProperty<bool>("SeePlayer"),
                         new NavigateNode("WalkTo"),     // Go to Player

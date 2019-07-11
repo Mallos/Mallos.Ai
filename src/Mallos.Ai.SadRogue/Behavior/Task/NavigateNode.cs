@@ -3,6 +3,9 @@
     using System;
     using GoRogue;
 
+    /// <summary>
+    /// A node that navigates to the passed coord.
+    /// </summary>
     public class NavigateNode : BehaviorTreeNode
     {
         private readonly string walkToKey;
@@ -10,7 +13,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigateNode"/> class.
         /// </summary>
-        /// <param name="walkToKey"></param>
+        /// <param name="walkToKey">Blackboard Property key for storing where we will walk.</param>
         public NavigateNode(string walkToKey)
         {
             if (string.IsNullOrWhiteSpace(walkToKey))
