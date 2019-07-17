@@ -3,6 +3,7 @@
     /// <summary>
     /// A node that makes the entity wander around with a max of 1 coord per update.
     /// </summary>
+    [BehaviorCategory(BehaviorCategory.Task)]
     public class WanderNode : BehaviorTreeNode
     {
         /// <inheritdoc />

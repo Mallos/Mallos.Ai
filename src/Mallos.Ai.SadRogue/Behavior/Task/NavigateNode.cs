@@ -6,6 +6,7 @@
     /// <summary>
     /// A node that navigates to the passed coord.
     /// </summary>
+    [BehaviorCategory(BehaviorCategory.Task)]
     public class NavigateNode : BehaviorTreeNode
     {
         private readonly string walkToKey;

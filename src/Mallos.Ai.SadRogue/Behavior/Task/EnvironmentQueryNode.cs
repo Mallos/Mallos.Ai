@@ -9,6 +9,7 @@
     /// <summary>
     /// A node that checks if we spot another <see cref="BasicEntity"/>.
     /// </summary>
+    [BehaviorCategory(BehaviorCategory.Task)]
     public class EnvironmentQueryNode : EnvironmentQueryNode<BasicEntity>
     {
         /// <summary>
@@ -39,6 +40,7 @@
     /// <remarks>
     /// Are there more then one entity in the list then the first one will be marked as spotted.
     /// </remarks>
+    [BehaviorCategory(BehaviorCategory.Task)]
     public class EnvironmentQueryNode<TEntityType> : BehaviorTreeNode
         where TEntityType : IGameObject
     {
