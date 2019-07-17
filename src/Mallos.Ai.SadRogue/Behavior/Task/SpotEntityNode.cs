@@ -73,8 +73,6 @@
                     {
                         // FIXME: Maybe there should be a function for picking if there are multiple ones.
                         //        Maybe we even want to pass the entity to the blackboard too.
-
-
                         blackboard.Properties[spottedCoordKey] = entities[0].Position;
                     }
 
@@ -98,8 +96,6 @@
         private IList<TEntityType> GetEntities(RogueBlackboard rb, int radius)
         {
             // FIXME: Check POV
-
-
             return rb.Map
                 .EntitiesInArea<TEntityType>(rb.Entity.Position, radius)
                 .Where(this.evaluator) // FIXME: Do we have to send the evaluator if we know the type?
