@@ -33,7 +33,7 @@ namespace GoRogueSample
             return new BehaviorTree(
                 new ParallelSequenceNode(
                     // Check if we can see the player.
-                    new SpotEntityNode(
+                    new EnvironmentQueryNode(
                         entity => 5,                    // Entity View Radius.
                         entity => entity is Player,     // Check if it is a player.
                         spottedKey: "SeePlayer",        // Set a blackboard property with true or false.

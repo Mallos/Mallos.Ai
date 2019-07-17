@@ -9,10 +9,10 @@
     /// <summary>
     /// A node that checks if we spot another <see cref="BasicEntity"/>.
     /// </summary>
-    public class SpotEntityNode : SpotEntityNode<BasicEntity>
+    public class EnvironmentQueryNode : EnvironmentQueryNode<BasicEntity>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SpotEntityNode"/> class.
+        /// Initializes a new instance of the <see cref="EnvironmentQueryNode"/> class.
         /// </summary>
         /// <param name="radiusFunc">A function that returns the entities fov radius.</param>
         /// <param name="evaluator">A function that evaluates if the entity should be counted.</param>
@@ -20,7 +20,7 @@
         /// <param name="fieldOfView">Whether it should only count entities that are visible.</param>
         /// <param name="spottedKey">Blackboard Property key for storing if we spotted something.</param>
         /// <param name="spottedCoordKey">Blackboard Property key for storing where we spotted something.</param>
-        public SpotEntityNode(
+        public EnvironmentQueryNode(
             Func<BasicEntity, int> radiusFunc,
             Func<BasicEntity, bool> evaluator = null,
             Func<List<BasicEntity>, List<BasicEntity>> selector = null,
@@ -39,7 +39,7 @@
     /// <remarks>
     /// Are there more then one entity in the list then the first one will be marked as spotted.
     /// </remarks>
-    public class SpotEntityNode<TEntityType> : BehaviorTreeNode
+    public class EnvironmentQueryNode<TEntityType> : BehaviorTreeNode
         where TEntityType : IGameObject
     {
         private readonly Func<BasicEntity, int> radiusFunc;
@@ -50,7 +50,7 @@
         private readonly string spottedCoordKey;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SpotEntityNode{TEntityType}"/> class.
+        /// Initializes a new instance of the <see cref="EnvironmentQueryNode{TEntityType}"/> class.
         /// </summary>
         /// <param name="radiusFunc">A function that returns the entities fov radius.</param>
         /// <param name="evaluator">A function that evaluates if the entity should be counted.</param>
@@ -58,7 +58,7 @@
         /// <param name="fieldOfView">Whether it should only count entities that are visible.</param>
         /// <param name="spottedKey">Blackboard Property key for storing if we spotted something.</param>
         /// <param name="spottedCoordKey">Blackboard Property key for storing where we spotted something.</param>
-        public SpotEntityNode(
+        public EnvironmentQueryNode(
             Func<BasicEntity, int> radiusFunc,
             Func<TEntityType, bool> evaluator = null,
             Func<List<TEntityType>, List<TEntityType>> selector = null,
