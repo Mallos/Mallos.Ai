@@ -36,8 +36,8 @@ namespace GoRogueSample
                     new SpotEntityNode(
                         entity => 5,                    // Entity View Radius.
                         entity => entity is Player,     // Check if it is a player.
-                        "SeePlayer",                    // Set a blackboard property with true or false.
-                        "WalkTo"                        // Set a blackboard property with the found coords.
+                        spottedKey: "SeePlayer",        // Set a blackboard property with true or false.
+                        spottedCoordKey: "WalkTo"       // Set a blackboard property with the found coords.
                     ),
                     new ConditionalNode(
                         blackboard => blackboard.GetProperty<bool>("SeePlayer"),
