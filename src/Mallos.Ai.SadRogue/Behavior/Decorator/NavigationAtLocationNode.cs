@@ -19,7 +19,7 @@
         /// </summary>
         /// <param name="positionFunc">A function that returns the desired location.</param>
         /// <param name="atLocationKey">Blackboard Property key for storing if we are at that location.</param>
-        /// <param name="failureCode">The code that will return if exceed max attempts.</param>
+        /// <param name="failureCode">The code that will return if failed.</param>
         public NavigationAtLocationNode(
             Func<BasicEntity, Coord> positionFunc,
             string atLocationKey = null,

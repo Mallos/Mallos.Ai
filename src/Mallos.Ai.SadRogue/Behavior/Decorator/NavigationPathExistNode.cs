@@ -19,7 +19,7 @@
         /// </summary>
         /// <param name="positionFunc">A function that returns the desired location.</param>
         /// <param name="hasPathKey">Blackboard Property key for storing if there is a possible navigation path.</param>
-        /// <param name="failureCode">The code that will return if exceed max attempts.</param>
+        /// <param name="failureCode">The code that will return if failed.</param>
         public NavigationPathExistNode(
             Func<BasicEntity, Coord> positionFunc,
             string hasPathKey = null,

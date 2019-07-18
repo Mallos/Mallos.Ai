@@ -21,14 +21,16 @@
         /// <param name="fieldOfView">Whether it should only count entities that are visible.</param>
         /// <param name="spottedKey">Blackboard Property key for storing if we spotted something.</param>
         /// <param name="spottedCoordKey">Blackboard Property key for storing where we spotted something.</param>
+        /// <param name="failureCode">The code that will return if failed.</param>
         public EnvironmentQueryNode(
             Func<BasicEntity, int> radiusFunc,
             Func<BasicEntity, bool> evaluator = null,
             Func<List<BasicEntity>, List<BasicEntity>> selector = null,
             bool fieldOfView = true,
             string spottedKey = null,
-            string spottedCoordKey = null)
-            : base(radiusFunc, evaluator, selector, fieldOfView, spottedKey, spottedCoordKey)
+            string spottedCoordKey = null,
+            BehaviorReturnCode failureCode = BehaviorReturnCode.Running)
+            : base(radiusFunc, evaluator, selector, fieldOfView, spottedKey, spottedCoordKey, failureCode)
         {
         }
     }
@@ -50,6 +52,7 @@
         private readonly bool fieldOfView;
         private readonly string spottedKey;
         private readonly string spottedCoordKey;
+        private readonly BehaviorReturnCode failureCode;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EnvironmentQueryNode{TEntityType}"/> class.
@@ -60,13 +63,15 @@
         /// <param name="fieldOfView">Whether it should only count entities that are visible.</param>
         /// <param name="spottedKey">Blackboard Property key for storing if we spotted something.</param>
         /// <param name="spottedCoordKey">Blackboard Property key for storing where we spotted something.</param>
+        /// <param name="failureCode">The code that will return if failed.</param>
         public EnvironmentQueryNode(
             Func<BasicEntity, int> radiusFunc,
             Func<TEntityType, bool> evaluator = null,
             Func<List<TEntityType>, List<TEntityType>> selector = null,
             bool fieldOfView = true,
             string spottedKey = null,
-            string spottedCoordKey = null)
+            string spottedCoordKey = null,
+            BehaviorReturnCode failureCode = BehaviorReturnCode.Running)
         {
             this.radiusFunc = radiusFunc ?? throw new ArgumentNullException(nameof(radiusFunc));
             this.evaluator = evaluator;
@@ -74,6 +79,7 @@
             this.fieldOfView = fieldOfView;
             this.spottedKey = spottedKey;
             this.spottedCoordKey = spottedCoordKey;
+            this.failureCode = failureCode;
         }
 
         /// <inheritdoc />
@@ -111,7 +117,7 @@
                 blackboard.Properties[spottedKey] = false;
             }
 
-            return BehaviorReturnCode.Failure;
+            return this.failureCode;
         }
 
         private List<TEntityType> GetEntities(RogueBlackboard rb, int radius)
