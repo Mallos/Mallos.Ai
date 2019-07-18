@@ -1,0 +1,3 @@
+[submodule "dep/SadConsole.GoRogueHelpers"]
+	path = dep/SadConsole.GoRogueHelpers
+	url = https://github.com/thesadrogue/SadConsole.GoRogueHelpers.git

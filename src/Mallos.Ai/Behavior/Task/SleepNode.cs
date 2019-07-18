@@ -19,6 +19,7 @@
         /// <param name="aliveTime">The amount of time in seconds that this node will be active for.</param>
         public SleepNode(float sleepTime, float aliveTime)
         {
+            // TODO: Can this be based on the blackboard?
             this.sleepTime = sleepTime;
             this.aliveTime = aliveTime;
         }
