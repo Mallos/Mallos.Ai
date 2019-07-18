@@ -45,6 +45,8 @@ namespace GoRogueSample.Screens
             Print(2, row++, "Monsters".Align(HorizontalAlignment.Center, Width - 4, '_'), Color.White, Color.Black);
             row += 1;
 
+            // TODO: All of this logic could be made more dynamic,
+            // but for the sake of it right now it will stay like this.
             DrawMonsterTypeInfo(row++, Rat.DefaultChar, Rat.DefaultColor, "Rat");
             DrawMonsterTypeInfo(row++, Goblin.DefaultChar, Goblin.DefaultColor, "Goblin");
             DrawMonsterTypeInfo(row++, Minotaur.DefaultChar, Minotaur.DefaultColor, "Minotaur");

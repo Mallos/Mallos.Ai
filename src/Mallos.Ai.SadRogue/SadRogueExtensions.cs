@@ -21,12 +21,33 @@
         public static IList<TEntityType> EntitiesInArea<TEntityType>(this Map map, Coord centerPosition, int radius, bool fieldOfView)
              where TEntityType : IGameObject
         {
-            return new RadiusAreaProvider(centerPosition, radius, map.DistanceMeasurement)
+            var query = new RadiusAreaProvider(centerPosition, radius, map.DistanceMeasurement)
                 .CalculatePositions()
-                .SelectMany(e => map.GetEntities<TEntityType>(e))
-                // TODO: Waiting on GoRouge solution
-                // .Where(entity => map.FOV.CanSee(centerPosition, entity.Position))
-                .ToList();
+                .SelectMany(e => map.GetEntities<TEntityType>(e));
+
+            if (fieldOfView)
+            {
+                return query.Where(e => CanSee(map, centerPosition, e.Position)).ToList();
+            }
+            else
+            {
+                return query.ToList();
+            }
+        }
+
+        public static bool CanSee(this Map map, Coord position1, Coord position2)
+        {
+            // OPTIMIZE: This could be optimized.
+            var points = GoRogue.Lines.Get(position1, position2);
+            foreach (var point in points)
+            {
+                if (!map.WalkabilityView.Contains(point.X, point.Y))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public static void ToggleState(this FOVVisibilityHandler visibilityHandler)
