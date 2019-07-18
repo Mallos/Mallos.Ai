@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using SadConsole;
 using System;
 
-namespace GoRogueSample
+namespace GoRogueSample.Dungeon
 {
     enum MapLayer
     {

@@ -6,7 +6,7 @@ using GoRogueSample.Monsters;
 using Microsoft.Xna.Framework;
 using SadConsole;
 
-namespace GoRogueSample
+namespace GoRogueSample.Dungeon
 {
     class DungeonBuilder
     {
@@ -21,12 +21,29 @@ namespace GoRogueSample
             map.ApplyTerrainOverlay(tempMap, SpawnTerrain);
 
             Coord posToSpawn;
-            // Spawn a few mock enemies
-            for (int i = 0; i < 10; i++)
+
+            // Spawn a few minotaurs
+            for (int i = 0; i < 2; i++)
+            {
+                posToSpawn = map.WalkabilityView.RandomPosition(true); // Get a location that is walkable
+                var minotaur = new Minotaur(posToSpawn, map);
+                map.AddEntity(minotaur);
+            }
+
+            // Spawn a few goblins
+            for (int i = 0; i < 8; i++)
             {
                 posToSpawn = map.WalkabilityView.RandomPosition(true); // Get a location that is walkable
                 var goblin = new Goblin(posToSpawn, map);
                 map.AddEntity(goblin);
+            }
+
+            // Spawn a few rats
+            for (int i = 0; i < 4; i++)
+            {
+                posToSpawn = map.WalkabilityView.RandomPosition(true); // Get a location that is walkable
+                var rat = new Rat(posToSpawn, map);
+                map.AddEntity(rat);
             }
 
             // Spawn player
@@ -39,12 +56,20 @@ namespace GoRogueSample
 
         private static IGameObject SpawnTerrain(Coord position, bool mapGenValue)
         {
-            // Floor or wall.  This could use the Factory system, or instantiate Floor and Wall classes, or something else if you prefer;
-            // this simplistic if-else is just used for example
-            if (mapGenValue) // Floor
-                return new BasicTerrain(Color.White, Color.Black, '.', position, isWalkable: true, isTransparent: true);
-            else             // Wall
-                return new BasicTerrain(Color.White, Color.Black, '#', position, isWalkable: false, isTransparent: false);
+            // Floor or wall. This could use the Factory system, or instantiate Floor and Wall classes, 
+            // or something else if you prefer; this simplistic if-else is just used for example
+            if (mapGenValue)
+            {
+                // Floor
+                return new BasicTerrain(Color.SaddleBrown, Color.Black, '.', position,
+                    isWalkable: true, isTransparent: true);
+            }
+            else
+            {
+                // Wall
+                return new BasicTerrain(Color.RosyBrown, Color.Black, '#', position,
+                    isWalkable: false, isTransparent: false);
+            }
         }
     }
 }

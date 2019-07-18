@@ -6,8 +6,11 @@ namespace GoRogueSample.Monsters
 {
     class Goblin : Monster
     {
+        public static readonly Color DefaultColor = Color.Red;
+        public static readonly char DefaultChar = 'g';
+
         public Goblin(Coord posToSpawn, Map map)
-            : base(posToSpawn, map, Color.Red, 'g')
+            : base(posToSpawn, map, DefaultColor, DefaultChar)
         {
 
         }

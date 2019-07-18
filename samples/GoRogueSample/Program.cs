@@ -1,4 +1,6 @@
-﻿namespace GoRogueSample
+﻿using GoRogueSample.Screens;
+
+namespace GoRogueSample
 {
     class Program
     {
@@ -22,8 +24,7 @@
 
         private static void Init()
         {
-            // Here we pass the viewport and map size as the same, but the map could be larger and the camera would center on the player.
-            MapScreen = new MapScreen(StartingWidth, StartingHeight, StartingWidth, StartingHeight);
+            MapScreen = new MapScreen(StartingWidth, StartingHeight);
             SadConsole.Global.CurrentScreen = MapScreen;
         }
     }

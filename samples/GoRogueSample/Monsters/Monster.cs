@@ -1,5 +1,6 @@
 ﻿using GoRogue;
 using GoRogue.GameFramework;
+using GoRogueSample.Dungeon;
 using Mallos.Ai;
 using Mallos.Ai.Behavior;
 using Mallos.Ai.Behavior.Composite;
@@ -17,6 +18,8 @@ namespace GoRogueSample.Monsters
     {
         public RogueBlackboard AiBlackboard { get; }
         public BehaviorTree BehaviorTree { get; }
+
+        public int FOVRadius { get; set; } = 5;
 
         public Monster(Coord posToSpawn, Map map, Color foreground, int glyph)
             : base(foreground, Color.Transparent, glyph, posToSpawn,
@@ -38,7 +41,7 @@ namespace GoRogueSample.Monsters
                 new ParallelSequenceNode(
                     // Check if we can see the player.
                     new EnvironmentQueryNode(
-                        entity => 5,                    // Entity View Radius.
+                        entity => FOVRadius,            // Entity View Radius.
                         entity => entity is Player,     // Check if it is a player.
                         spottedKey: "SeePlayer",        // Set a blackboard property with true or false.
                         spottedCoordKey: "WalkTo"       // Set a blackboard property with the found coords.

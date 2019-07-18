@@ -1,4 +1,5 @@
 ﻿using GoRogue;
+using GoRogueSample.Dungeon;
 using Mallos.Ai;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -7,7 +8,8 @@ using System.Collections.Generic;
 
 namespace GoRogueSample
 {
-    // Custom class for the player just so we can handle input.  This could be done via a component, or in a main screen, but for simplicity we do it here.
+    // Custom class for the player just so we can handle input.
+    // This could be done via a component, or in a main screen, but for simplicity we do it here.
     class Player : BasicEntity
     {
         private static readonly Dictionary<Keys, Direction> _movementDirectionMapping = new Dictionary<Keys, Direction>
@@ -20,11 +22,11 @@ namespace GoRogueSample
         public int FOVRadius;
 
         public Player(Coord position)
-            : base(Color.White, Color.Transparent, '@', position, (int)MapLayer.PLAYER, isWalkable: false, isTransparent: true)
+            : base(Color.CornflowerBlue, Color.Transparent, '@', position,
+                  (int)MapLayer.PLAYER, isWalkable: false, isTransparent: true)
         {
             FOVRadius = 10;
         }
-
 
         public override bool ProcessKeyboard(SadConsole.Input.Keyboard info)
         {
@@ -39,23 +41,29 @@ namespace GoRogueSample
             }
 #endif
 
-            Direction moveDirection = Direction.NONE;
+            if (ProcessMovement(info))
+            {
+                return true;
+            }
 
+            return base.ProcessKeyboard(info);
+        }
+
+        private bool ProcessMovement(SadConsole.Input.Keyboard info)
+        {
+            Direction moveDirection = Direction.NONE;
             // Simplified way to check if any key we care about is pressed and set movement direction.
             foreach (var key in _movementDirectionMapping.Keys)
+            {
                 if (info.IsKeyPressed(key))
                 {
                     moveDirection = _movementDirectionMapping[key];
                     break;
                 }
+            }
 
             Position += moveDirection;
-
-            if (moveDirection != Direction.NONE)
-                return true;
-            else
-                return base.ProcessKeyboard(info);
+            return moveDirection != Direction.NONE;
         }
-
     }
 }
