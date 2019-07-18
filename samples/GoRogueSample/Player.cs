@@ -1,4 +1,5 @@
 ﻿using GoRogue;
+using Mallos.Ai;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SadConsole;
@@ -27,6 +28,15 @@ namespace GoRogueSample
 
         public override bool ProcessKeyboard(SadConsole.Input.Keyboard info)
         {
+            if (info.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.F4))
+            {
+                if (CurrentMap is ExampleMap exampleMap)
+                {
+                    exampleMap.FovVisibilityHandler.ToggleOnOff();
+                    return true;
+                }
+            }
+
             Direction moveDirection = Direction.NONE;
 
             // Simplified way to check if any key we care about is pressed and set movement direction.

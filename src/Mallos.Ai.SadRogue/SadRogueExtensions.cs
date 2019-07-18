@@ -6,6 +6,7 @@
     using GoRogue;
     using GoRogue.GameFramework;
     using GoRogue.MapViews;
+    using SadConsole;
 
     public static class SadRogueExtensions
     {
@@ -26,6 +27,18 @@
                 // TODO: Waiting on GoRouge solution
                 // .Where(entity => map.FOV.CanSee(centerPosition, entity.Position))
                 .ToList();
+        }
+
+        public static void ToggleOnOff(this FOVVisibilityHandler visibilityHandler)
+        {
+            if (visibilityHandler.Enabled)
+            {
+                visibilityHandler.Disable();
+            }
+            else
+            {
+                visibilityHandler.Enable();
+            }
         }
     }
 }
