@@ -2,8 +2,8 @@
 {
     class Program
     {
-        private const int StartingWidth = 80;
-        private const int StartingHeight = 25;
+        private const int StartingWidth = 100;
+        private const int StartingHeight = 40;
 
         public static MapScreen MapScreen { get; set; }
 

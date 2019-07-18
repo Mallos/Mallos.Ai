@@ -29,7 +29,7 @@
                 .ToList();
         }
 
-        public static void ToggleOnOff(this FOVVisibilityHandler visibilityHandler)
+        public static void ToggleState(this FOVVisibilityHandler visibilityHandler)
         {
             if (visibilityHandler.Enabled)
             {

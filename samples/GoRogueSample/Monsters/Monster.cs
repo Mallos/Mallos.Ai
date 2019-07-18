@@ -8,27 +8,31 @@ using Mallos.Ai.Behavior.Task;
 using Microsoft.Xna.Framework;
 using SadConsole;
 
-namespace GoRogueSample
+namespace GoRogueSample.Monsters
 {
-    class Monster : BasicEntity
+    /// <summary>
+    /// The base class for all Monsters in the world.
+    /// </summary>
+    abstract class Monster : BasicEntity
     {
-        public RogueBlackboard AiBlackboard;
-        public BehaviorTree BehaviorTree;
+        public RogueBlackboard AiBlackboard { get; }
+        public BehaviorTree BehaviorTree { get; }
 
-        public Monster(Coord posToSpawn, Map map)
-            : base(Color.Red, Color.Transparent, 'g', posToSpawn,
-                  (int)MapLayer.MONSTERS, isWalkable: true, isTransparent: true)
+        public Monster(Coord posToSpawn, Map map, Color foreground, int glyph)
+            : base(foreground, Color.Transparent, glyph, posToSpawn,
+                  (int)MapLayer.MONSTERS, isWalkable: false, isTransparent: true)
         {
+            // TODO: Can I use CurrentMap instead of passing map?
             this.AiBlackboard = new RogueBlackboard(map, this);
             this.BehaviorTree = CreateBehaviorTree();
         }
 
-        public void UpdateAI()
+        public void WorldTick()
         {
             this.BehaviorTree.Execute(this.AiBlackboard);
         }
 
-        private BehaviorTree CreateBehaviorTree()
+        protected virtual BehaviorTree CreateBehaviorTree()
         {
             return new BehaviorTree(
                 new ParallelSequenceNode(

@@ -28,14 +28,16 @@ namespace GoRogueSample
 
         public override bool ProcessKeyboard(SadConsole.Input.Keyboard info)
         {
-            if (info.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.F4))
+#if DEBUG
+            if (info.IsKeyPressed(Keys.F4))
             {
                 if (CurrentMap is ExampleMap exampleMap)
                 {
-                    exampleMap.FovVisibilityHandler.ToggleOnOff();
+                    exampleMap.FovVisibilityHandler.ToggleState();
                     return true;
                 }
             }
+#endif
 
             Direction moveDirection = Direction.NONE;
 
