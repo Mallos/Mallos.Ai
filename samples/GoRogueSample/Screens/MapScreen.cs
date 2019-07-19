@@ -42,14 +42,24 @@ namespace GoRogueSample.Screens
             Children.Add(MapRenderer);
             
             // Set player to receive input, since in this example the player handles movement
-            Map.ControlledGameObject.IsFocused = true; 
+            Map.ControlledGameObject.IsFocused = true;
 
-            // Set up to recalculate FOV and set camera position appropriately when the player moves
+            // Set up to recalculate FOV and set camera position appropriately when the player moves.
+            // Also make sure we hook the new Player if that object is reassigned.
             Map.ControlledGameObject.Moved += Player_Moved;
+            Map.ControlledGameObjectChanged += ControlledGameObjectChanged;
 
             // Calculate initial FOV and center camera
             Map.CalculateFOV(Map.ControlledGameObject.Position, Map.ControlledGameObject.FOVRadius, Radius.SQUARE);
             MapRenderer.CenterViewPortOnPoint(Map.ControlledGameObject.Position);
+        }
+
+        private void ControlledGameObjectChanged(object s, ControlledGameObjectChangedArgs e)
+        {
+            if (e.OldObject != null)
+                e.OldObject.Moved -= Player_Moved;
+
+            ((BasicMap)s).ControlledGameObject.Moved += Player_Moved;
         }
 
         private void Player_Moved(object sender, ItemMovedEventArgs<IGameObject> e)
