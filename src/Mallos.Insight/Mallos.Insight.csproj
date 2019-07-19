@@ -7,13 +7,16 @@
   <ItemGroup>
     <None Remove="Content\404.html" />
     <None Remove="Content\app.html" />
-    <None Remove="Content\app.js" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Content\404.html" />
     <EmbeddedResource Include="Content\app.html" />
-    <EmbeddedResource Include="Content\app.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\Mallos.Insight.Frontend\dist\app.js" Link="Content\app.js" />
+    <EmbeddedResource Include="..\Mallos.Insight.Frontend\dist\app.js.map" Link="Content\app.js.map" />
   </ItemGroup>
 
   <ItemGroup>
