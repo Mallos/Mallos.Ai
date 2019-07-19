@@ -1,9 +1,9 @@
 ﻿namespace Mallos.Insight.Nancy
 {
+    using global::Nancy.Owin;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
-    using global::Nancy.Owin;
 
     class Startup
     {
