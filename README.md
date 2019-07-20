@@ -4,7 +4,6 @@ A lightweight AI library designed for Games.
 ## Features
 - [x] Behavior Tree
 - [ ] Dialog Tree
-- [ ] Advanced Insight
 
 ### Supported Frameworks
 * [SadConsole with GoRogue](https://github.com/thesadrogue/SadConsole.GoRogueHelpers)
