@@ -9,8 +9,6 @@
     [BehaviorCategory(BehaviorCategory.Decorator)]
     public class ConditionalNode : BehaviorTreeNode
     {
-        private readonly Func<Blackboard, bool> conditional;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ConditionalNode"/> class.
         /// </summary>
@@ -22,10 +20,15 @@
             BehaviorTreeNode trueNode = null,
             BehaviorTreeNode falseNode = null)
         {
-            this.conditional = conditional ?? throw new ArgumentNullException(nameof(conditional));
+            this.Conditional = conditional ?? throw new ArgumentNullException(nameof(conditional));
             this.TrueNode = trueNode;
             this.FalseNode = falseNode;
         }
+
+        /// <summary>
+        /// Gets the conditional function that is invoked.
+        /// </summary>
+        public Func<Blackboard, bool> Conditional { get; }
 
         /// <summary>
         /// Gets the <see cref="BehaviorTreeNode"/> that will execute
@@ -42,7 +45,7 @@
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
-            switch (this.conditional.Invoke(blackboard))
+            switch (this.Conditional.Invoke(blackboard))
             {
                 case true: return (this.TrueNode != null) ? this.TrueNode.Execute(blackboard) : BehaviorReturnCode.Success;
                 default: return (this.FalseNode != null) ? this.FalseNode.Execute(blackboard) : BehaviorReturnCode.Success;

@@ -30,15 +30,6 @@
         public List<BehaviorTreeNode> Children { get; }
 
         /// <summary>
-        /// Add a new child.
-        /// </summary>
-        /// <param name="node">The new child.</param>
-        public void Add(BehaviorTreeNode node)
-        {
-            this.Children.Add(node);
-        }
-
-        /// <summary>
         /// Returns the enumerator for the nodes.
         /// </summary>
         /// <returns>The enumerator.</returns>

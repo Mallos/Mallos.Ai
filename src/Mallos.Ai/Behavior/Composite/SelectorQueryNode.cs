@@ -10,8 +10,6 @@
     [BehaviorCategory(BehaviorCategory.Composite)]
     public class SelectorQueryNode : BehaviorTreeNode, IBehaviorTreeNodeChildren
     {
-        private readonly Func<SelectorQueryNode, Blackboard, int> selector;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectorQueryNode"/> class.
         /// </summary>
@@ -21,7 +19,7 @@
             Func<SelectorQueryNode, Blackboard, int> selector,
             params BehaviorTreeNode[] children)
         {
-            this.selector = selector ?? throw new ArgumentNullException(nameof(selector));
+            this.Selector = selector ?? throw new ArgumentNullException(nameof(selector));
             this.Children = new List<BehaviorTreeNode>(children);
         }
 
@@ -31,13 +29,9 @@
         public List<BehaviorTreeNode> Children { get; }
 
         /// <summary>
-        /// Add a new child.
+        /// Gets the selector conditional function that is invoked.
         /// </summary>
-        /// <param name="node">The new child.</param>
-        public void Add(BehaviorTreeNode node)
-        {
-            this.Children.Add(node);
-        }
+        public Func<SelectorQueryNode, Blackboard, int> Selector { get; }
 
         /// <summary>
         /// Returns the enumerator for the nodes.
@@ -60,7 +54,7 @@
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
-            var index = this.selector.Invoke(this, blackboard);
+            var index = this.Selector.Invoke(this, blackboard);
             if (index < 0 || index >= this.Children.Count)
             {
                 return BehaviorReturnCode.Failure;

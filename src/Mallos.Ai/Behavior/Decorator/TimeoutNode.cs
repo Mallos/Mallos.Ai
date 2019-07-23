@@ -11,13 +11,11 @@
     [BehaviorCategory(BehaviorCategory.Decorator)]
     public class TimeoutNode : BehaviorTreeNode, IBehaviorTreeNodeChild
     {
-        private readonly TimeSpan timeout;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TimeoutNode"/> class.
         /// </summary>
         /// <param name="child">The child node.</param>
-        /// <param name="timeout">The amount of time this node has.</param>
+        /// <param name="timeout">The amount of time this node has until it times out.</param>
         public TimeoutNode(BehaviorTreeNode child, TimeSpan timeout)
         {
             if (timeout == TimeSpan.MinValue)
@@ -26,7 +24,7 @@
             }
 
             this.Child = child ?? throw new ArgumentNullException(nameof(child));
-            this.timeout = timeout;
+            this.Timeout = timeout;
         }
 
         /// <summary>
@@ -34,13 +32,18 @@
         /// </summary>
         public BehaviorTreeNode Child { get; }
 
+        /// <summary>
+        /// Gets the amount of time this node has until it times out.
+        /// </summary>
+        public TimeSpan Timeout { get; }
+
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
             var cancellationTokenSource = new CancellationTokenSource();
             var task = TTask.Run(() => this.Child.Execute(blackboard), cancellationTokenSource.Token);
 
-            if (task.Wait(this.timeout))
+            if (task.Wait(this.Timeout))
             {
                 return task.Result;
             }

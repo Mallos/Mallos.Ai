@@ -10,19 +10,17 @@
     [BehaviorCategory(BehaviorCategory.Composite)]
     public class RandomSelectorNode : BehaviorTreeNode, IBehaviorTreeNodeChildren
     {
-        private readonly Func<Blackboard, (int min, int max), int> randomFunc;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RandomSelectorNode"/> class.
         /// </summary>
         /// <param name="children">The children.</param>
-        /// <param name="randomFunc">The random function.</param>
+        /// <param name="function">The random function.</param>
         public RandomSelectorNode(
-            Func<Blackboard, (int min, int max), int> randomFunc = null,
+            Func<Blackboard, (int min, int max), int> function = null,
             params BehaviorTreeNode[] children)
         {
             this.Children = new List<BehaviorTreeNode>(children);
-            this.randomFunc = randomFunc ?? RandomNode;
+            this.Function = function ?? RandomNode;
         }
 
         /// <summary>
@@ -31,13 +29,9 @@
         public List<BehaviorTreeNode> Children { get; }
 
         /// <summary>
-        /// Add a new child.
+        /// Gets the function that is invoked.
         /// </summary>
-        /// <param name="node">The new child.</param>
-        public void Add(BehaviorTreeNode node)
-        {
-            this.Children.Add(node);
-        }
+        public Func<Blackboard, (int min, int max), int> Function { get; }
 
         /// <summary>
         /// Returns the enumerator for the nodes.
@@ -60,7 +54,7 @@
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
-            var index = this.randomFunc.Invoke(blackboard, (0, this.Children.Count - 1));
+            var index = this.Function.Invoke(blackboard, (0, this.Children.Count - 1));
             if (index < 0 || index >= this.Children.Count)
             {
                 return BehaviorReturnCode.Failure;

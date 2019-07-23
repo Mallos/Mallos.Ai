@@ -13,11 +13,12 @@
         /// </summary>
         /// <param name="child">The child node.</param>
         /// <param name="maxCount">The number of times this node will be exectued.</param>
-        public CounterNode(BehaviorTreeNode child, int maxCount)
+        /// <param name="counterKey">Blackboard Property key for storing the current counter index.</param>
+        public CounterNode(BehaviorTreeNode child, int maxCount, string counterKey = null)
         {
             this.Child = child ?? throw new ArgumentNullException(nameof(child));
             this.MaxCount = maxCount;
-            this.Counter = 0;
+            this.CounterKey = counterKey ?? Guid.ToString();
         }
 
         /// <summary>
@@ -31,21 +32,21 @@
         public int MaxCount { get; }
 
         /// <summary>
-        /// Gets how many times this node have been executed.
+        /// Gets the Blackboard Property key for storing the current counter index.
         /// </summary>
-        public int Counter { get; private set; }
+        public string CounterKey { get; }
 
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
-            this.Counter++;
-            if (this.Counter < this.MaxCount)
+            var counter = blackboard.Increment(this.CounterKey);
+            if (counter < this.MaxCount)
             {
                 return BehaviorReturnCode.Running;
             }
             else
             {
-                this.Counter = 0;
+                blackboard.Properties[this.CounterKey] = 0;
                 return this.Child.Execute(blackboard);
             }
         }

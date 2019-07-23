@@ -8,10 +8,6 @@
     [BehaviorCategory(BehaviorCategory.Decorator)]
     public class RetryNode : BehaviorTreeNode, IBehaviorTreeNodeChild
     {
-        private readonly int maxAttempts;
-        private readonly string attemptKey;
-        private readonly BehaviorReturnCode failureCode;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryNode"/> class.
         /// </summary>
@@ -31,9 +27,9 @@
             }
 
             this.Child = child ?? throw new ArgumentNullException(nameof(child));
-            this.maxAttempts = maxAttempts;
-            this.attemptKey = attemptKey;
-            this.failureCode = failureCode;
+            this.MaxAttempts = maxAttempts;
+            this.AttemptKey = attemptKey;
+            this.FailureCode = failureCode;
         }
 
         /// <summary>
@@ -41,14 +37,29 @@
         /// </summary>
         public BehaviorTreeNode Child { get; }
 
+        /// <summary>
+        /// Gets the max attempts this node will be executed.
+        /// </summary>
+        public int MaxAttempts { get; }
+
+        /// <summary>
+        /// Gets the blackboard property key that will contain the how many attempts have passed.
+        /// </summary>
+        public string AttemptKey { get; }
+
+        /// <summary>
+        /// Gets the code that will return if exceed max attempts.
+        /// </summary>
+        public BehaviorReturnCode FailureCode { get; }
+
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
-            for (int currentAttempts = 0; currentAttempts <= this.maxAttempts; currentAttempts++)
+            for (int currentAttempts = 0; currentAttempts <= this.MaxAttempts; currentAttempts++)
             {
-                if (!string.IsNullOrWhiteSpace(this.attemptKey))
+                if (!string.IsNullOrWhiteSpace(this.AttemptKey))
                 {
-                    blackboard.Properties[this.attemptKey] = currentAttempts;
+                    blackboard.Properties[this.AttemptKey] = currentAttempts;
                 }
 
                 var result = this.Child.Execute(blackboard);
@@ -58,7 +69,7 @@
                 }
             }
 
-            return this.failureCode;
+            return this.FailureCode;
         }
     }
 }

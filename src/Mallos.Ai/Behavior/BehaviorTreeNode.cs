@@ -1,5 +1,7 @@
 ﻿namespace Mallos.Ai.Behavior
 {
+    using System;
+
     /// <summary>
     /// The base class for all behavior tree nodes.
     /// </summary>
@@ -10,7 +12,13 @@
         /// </summary>
         protected BehaviorTreeNode()
         {
+            this.Guid = Guid.NewGuid();
         }
+
+        /// <summary>
+        /// Unique ID for this node.
+        /// </summary>
+        public Guid Guid { get; }
 
         /// <summary>
         /// Execute this behavior tree node.
