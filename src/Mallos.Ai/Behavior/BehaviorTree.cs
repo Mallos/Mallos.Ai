@@ -10,7 +10,7 @@
     /// </summary>
     public class BehaviorTree : IEnumerable<BehaviorTreeNode>
     {
-        private BehaviorTreeNode rootNode;
+        private readonly BehaviorTreeNode rootNode;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BehaviorTree"/> class.

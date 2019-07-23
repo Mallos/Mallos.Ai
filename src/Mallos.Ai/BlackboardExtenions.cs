@@ -11,5 +11,31 @@
         {
             return blackboard.Properties.ContainsKey(name) && blackboard.Properties[name] is T;
         }
+
+        public static int Increment(this Blackboard blackboard, string name, int amount = 1)
+        {
+            if (!blackboard.Properties.ContainsKey(name))
+            {
+                blackboard.Properties[name] = amount;
+                return amount;
+            }
+
+            var newNumber = (int)blackboard.Properties[name] + amount;
+            blackboard.Properties[name] = newNumber;
+            return newNumber;
+        }
+
+        public static float Increment(this Blackboard blackboard, string name, float amount = 1.0f)
+        {
+            if (!blackboard.Properties.ContainsKey(name))
+            {
+                blackboard.Properties[name] = amount;
+                return amount;
+            }
+
+            var newNumber = (float)blackboard.Properties[name] + amount;
+            blackboard.Properties[name] = newNumber;
+            return newNumber;
+        }
     }
 }

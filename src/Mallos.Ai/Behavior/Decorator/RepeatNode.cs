@@ -8,9 +8,6 @@
     [BehaviorCategory(BehaviorCategory.Decorator)]
     public class RepeatNode : BehaviorTreeNode, IBehaviorTreeNodeChild
     {
-        private readonly int times;
-        private readonly string timesKey;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RepeatNode"/> class.
         /// </summary>
@@ -25,8 +22,8 @@
             }
 
             this.Child = child ?? throw new ArgumentNullException(nameof(child));
-            this.times = times;
-            this.timesKey = timesKey;
+            this.Times = times;
+            this.TimesKey = timesKey;
         }
 
         /// <summary>
@@ -34,15 +31,25 @@
         /// </summary>
         public BehaviorTreeNode Child { get; }
 
+        /// <summary>
+        /// Gets the amount of times this will be executed at once.
+        /// </summary>
+        public int Times { get; }
+
+        /// <summary>
+        /// Gets the blackboard property key that will contain the how many times it has executed.
+        /// </summary>
+        public string TimesKey { get; }
+
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
             var lastResult = BehaviorReturnCode.Failure;
-            for (int i = 1; i <= this.times; i++)
+            for (int i = 1; i <= this.Times; i++)
             {
-                if (!string.IsNullOrWhiteSpace(this.timesKey))
+                if (!string.IsNullOrWhiteSpace(this.TimesKey))
                 {
-                    blackboard.Properties[this.timesKey] = i;
+                    blackboard.Properties[this.TimesKey] = i;
                 }
 
                 lastResult = this.Child.Execute(blackboard);

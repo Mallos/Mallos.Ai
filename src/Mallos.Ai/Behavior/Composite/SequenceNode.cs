@@ -15,14 +15,24 @@
     [BehaviorCategory(BehaviorCategory.Composite)]
     public class SequenceNode : BehaviorTreeNode, IBehaviorTreeNodeChildren
     {
-        private short sequence = 0;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SequenceNode"/> class.
         /// </summary>
         /// <param name="children">The children.</param>
         public SequenceNode(params BehaviorTreeNode[] children)
         {
+            this.SequenceKey = Guid.ToString();
+            this.Children = new List<BehaviorTreeNode>(children);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SequenceNode"/> class.
+        /// </summary>
+        /// <param name="sequenceKey">Blackboard Property key for storing the current sequence.</param>
+        /// <param name="children">The children.</param>
+        public SequenceNode(string sequenceKey, params BehaviorTreeNode[] children)
+        {
+            this.SequenceKey = sequenceKey;
             this.Children = new List<BehaviorTreeNode>(children);
         }
 
@@ -32,13 +42,9 @@
         public List<BehaviorTreeNode> Children { get; }
 
         /// <summary>
-        /// Add a new child.
+        /// Gets the Blackboard Property key for storing the current sequence.
         /// </summary>
-        /// <param name="node">The new child.</param>
-        public void Add(BehaviorTreeNode node)
-        {
-            this.Children.Add(node);
-        }
+        public string SequenceKey { get; }
 
         /// <summary>
         /// Returns the enumerator for the nodes.
@@ -61,28 +67,34 @@
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
-            while (this.sequence < this.Children.Count)
+            if (!blackboard.HasProperty<int>(SequenceKey))
             {
-                switch (this.Children[this.sequence].Execute(blackboard))
+                blackboard.Properties[SequenceKey] = 0;
+            }
+
+            var sequence = blackboard.GetProperty<int>(SequenceKey);
+            while (sequence < this.Children.Count)
+            {
+                switch (this.Children[sequence].Execute(blackboard))
                 {
                     case BehaviorReturnCode.Failure:
-                        this.sequence++;
+                        blackboard.Properties[SequenceKey] = sequence + 1;
                         return BehaviorReturnCode.Running;
 
                     case BehaviorReturnCode.Success:
-                        this.sequence = 0;
+                        blackboard.Properties[SequenceKey] = 0;
                         return BehaviorReturnCode.Success;
 
                     case BehaviorReturnCode.Running:
                         return BehaviorReturnCode.Running;
 
                     default:
-                        this.sequence++;
+                        blackboard.Properties[SequenceKey] = sequence + 1;
                         return BehaviorReturnCode.Failure;
                 }
             }
 
-            this.sequence = 0;
+            blackboard.Properties[SequenceKey] = 0;
             return BehaviorReturnCode.Running;
         }
     }

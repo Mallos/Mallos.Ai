@@ -4,8 +4,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// A blackboard is a central place to store and look up
-    /// relevant data.
+    /// A blackboard is a central place to store and look up relevant data.
     /// </summary>
     public class Blackboard
     {
