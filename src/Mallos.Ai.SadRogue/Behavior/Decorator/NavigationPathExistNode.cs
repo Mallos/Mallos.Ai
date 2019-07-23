@@ -10,10 +10,6 @@
     [BehaviorCategory(BehaviorCategory.Decorator)]
     public class NavigationPathExistNode : BehaviorTreeNode
     {
-        private readonly Func<BasicEntity, Coord> positionFunc;
-        private readonly string hasPathKey;
-        private readonly BehaviorReturnCode failureCode;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigationPathExistNode"/> class.
         /// </summary>
@@ -25,24 +21,39 @@
             string hasPathKey = null,
             BehaviorReturnCode failureCode = BehaviorReturnCode.Failure)
         {
-            this.positionFunc = positionFunc;
-            this.hasPathKey = hasPathKey;
-            this.failureCode = failureCode;
+            this.Function = positionFunc;
+            this.HasPathKey = hasPathKey;
+            this.FailureCode = failureCode;
         }
+
+        /// <summary>
+        /// Gets the function that is invoked.
+        /// </summary>
+        public Func<BasicEntity, Coord> Function { get; }
+
+        /// <summary>
+        /// Gets the blackboard Property key for storing if there is a possible navigation path.
+        /// </summary>
+        public string HasPathKey { get; }
+
+        /// <summary>
+        /// Gets the code that will return if failed.
+        /// </summary>
+        public BehaviorReturnCode FailureCode { get; }
 
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
             if (blackboard is RogueBlackboard rb)
             {
-                var desiredPosition = this.positionFunc(rb.Entity);
+                var desiredPosition = this.Function(rb.Entity);
                 var path = rb.Map.AStar.ShortestPath(rb.Entity.Position, desiredPosition);
 
                 if (path != null)
                 {
-                    if (!string.IsNullOrWhiteSpace(hasPathKey))
+                    if (!string.IsNullOrWhiteSpace(this.HasPathKey))
                     {
-                        rb.Properties[hasPathKey] = true;
+                        rb.Properties[this.HasPathKey] = true;
                     }
 
                     // TODO: Do we want a way to store the found path?
@@ -50,12 +61,12 @@
                 }
                 else
                 {
-                    if (!string.IsNullOrWhiteSpace(hasPathKey))
+                    if (!string.IsNullOrWhiteSpace(this.HasPathKey))
                     {
-                        rb.Properties[hasPathKey] = false;
+                        rb.Properties[this.HasPathKey] = false;
                     }
 
-                    return failureCode;
+                    return FailureCode;
                 }
             }
 

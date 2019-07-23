@@ -10,10 +10,6 @@
     [BehaviorCategory(BehaviorCategory.Decorator)]
     public class NavigationAtLocationNode : BehaviorTreeNode
     {
-        private readonly Func<BasicEntity, Coord> positionFunc;
-        private readonly string atLocationKey;
-        private readonly BehaviorReturnCode failureCode;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigationAtLocationNode"/> class.
         /// </summary>
@@ -25,34 +21,49 @@
             string atLocationKey = null,
             BehaviorReturnCode failureCode = BehaviorReturnCode.Failure)
         {
-            this.positionFunc = positionFunc;
-            this.atLocationKey = atLocationKey;
-            this.failureCode = failureCode;
+            this.Function = positionFunc;
+            this.AtLocationKey = atLocationKey;
+            this.FailureCode = failureCode;
         }
+
+        /// <summary>
+        /// Gets the function that returns the desired location.
+        /// </summary>
+        public Func<BasicEntity, Coord> Function { get; }
+
+        /// <summary>
+        /// Gets the blackboard Property key for storing if we are at that location.
+        /// </summary>
+        public string AtLocationKey { get; }
+
+        /// <summary>
+        /// Gets the code that will return if failed.
+        /// </summary>
+        public BehaviorReturnCode FailureCode { get; }
 
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
             if (blackboard is RogueBlackboard rb)
             {
-                var desiredPosition = this.positionFunc(rb.Entity);
+                var desiredPosition = this.Function(rb.Entity);
                 if (rb.Entity.Position == desiredPosition)
                 {
-                    if (!string.IsNullOrWhiteSpace(atLocationKey))
+                    if (!string.IsNullOrWhiteSpace(this.AtLocationKey))
                     {
-                        rb.Properties[atLocationKey] = true;
+                        rb.Properties[this.AtLocationKey] = true;
                     }
 
                     return BehaviorReturnCode.Success;
                 }
                 else
                 {
-                    if (!string.IsNullOrWhiteSpace(atLocationKey))
+                    if (!string.IsNullOrWhiteSpace(this.AtLocationKey))
                     {
-                        rb.Properties[atLocationKey] = false;
+                        rb.Properties[this.AtLocationKey] = false;
                     }
 
-                    return failureCode;
+                    return this.FailureCode;
                 }
             }
 

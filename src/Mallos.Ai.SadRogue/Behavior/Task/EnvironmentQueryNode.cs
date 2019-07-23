@@ -46,14 +46,6 @@
     public class EnvironmentQueryNode<TEntityType> : BehaviorTreeNode
         where TEntityType : IGameObject
     {
-        private readonly Func<BasicEntity, int> radiusFunc;
-        private readonly Func<TEntityType, bool> evaluator = null;
-        private readonly Func<List<TEntityType>, List<TEntityType>> selector = null;
-        private readonly bool fieldOfView;
-        private readonly string spottedKey;
-        private readonly string spottedCoordKey;
-        private readonly BehaviorReturnCode failureCode;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EnvironmentQueryNode{TEntityType}"/> class.
         /// </summary>
@@ -73,60 +65,95 @@
             string spottedCoordKey = null,
             BehaviorReturnCode failureCode = BehaviorReturnCode.Running)
         {
-            this.radiusFunc = radiusFunc ?? throw new ArgumentNullException(nameof(radiusFunc));
-            this.evaluator = evaluator;
-            this.selector = selector;
-            this.fieldOfView = fieldOfView;
-            this.spottedKey = spottedKey;
-            this.spottedCoordKey = spottedCoordKey;
-            this.failureCode = failureCode;
+            this.RadiusFunction = radiusFunc ?? throw new ArgumentNullException(nameof(radiusFunc));
+            this.Evaluator = evaluator;
+            this.Selector = selector;
+            this.FieldOfView = fieldOfView;
+            this.SpottedKey = spottedKey;
+            this.SpottedCoordKey = spottedCoordKey;
+            this.FailureCode = failureCode;
         }
+
+        /// <summary>
+        /// Gets the function that returns the entities fov radius.
+        /// </summary>
+        public Func<BasicEntity, int> RadiusFunction { get; }
+
+        /// <summary>
+        /// Gets the function that evaluates if the entity should be counted.
+        /// </summary>
+        public Func<TEntityType, bool> Evaluator { get; }
+
+        /// <summary>
+        /// Gets the function that evaluates all the found entities in the radius.
+        /// </summary>
+        public Func<List<TEntityType>, List<TEntityType>> Selector { get; }
+
+        /// <summary>
+        /// Gets whether it should only count entities that are visible.
+        /// </summary>
+        public bool FieldOfView { get; }
+
+        /// <summary>
+        /// Gets the blackboard Property key for storing if we spotted something.
+        /// </summary>
+        public string SpottedKey { get; }
+
+        /// <summary>
+        /// Gets the blackboard Property key for storing where we spotted something.
+        /// </summary>
+        public string SpottedCoordKey { get; }
+
+        /// <summary>
+        /// Gets the code that will return if failed.
+        /// </summary>
+        public BehaviorReturnCode FailureCode { get; }
 
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
             if (blackboard is RogueBlackboard rb)
             {
-                var radius = this.radiusFunc(rb.Entity);
+                var radius = this.RadiusFunction(rb.Entity);
                 var entities = GetEntities(rb, radius);
 
-                if (this.selector != null)
+                if (this.Selector != null)
                 {
-                    entities = this.selector(entities);
+                    entities = this.Selector(entities);
                 }
 
                 if (entities.Count > 0)
                 {
-                    if (!string.IsNullOrWhiteSpace(spottedCoordKey))
+                    if (!string.IsNullOrWhiteSpace(this.SpottedCoordKey))
                     {
                         // TODO: Do we want to select them based on distance?
-                        blackboard.Properties[spottedCoordKey] = entities[0].Position;
+                        blackboard.Properties[this.SpottedCoordKey] = entities[0].Position;
                     }
 
-                    if (!string.IsNullOrWhiteSpace(spottedKey))
+                    if (!string.IsNullOrWhiteSpace(this.SpottedKey))
                     {
-                        blackboard.Properties[spottedKey] = true;
+                        blackboard.Properties[this.SpottedKey] = true;
                     }
 
                     return BehaviorReturnCode.Success;
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(spottedKey))
+            if (!string.IsNullOrWhiteSpace(this.SpottedKey))
             {
-                blackboard.Properties[spottedKey] = false;
+                blackboard.Properties[this.SpottedKey] = false;
             }
 
-            return this.failureCode;
+            return this.FailureCode;
         }
 
         private List<TEntityType> GetEntities(RogueBlackboard rb, int radius)
         {
-            var entities = rb.Map.EntitiesInArea<TEntityType>(rb.Entity.Position, radius, fieldOfView);
+            var entities = rb.Map.EntitiesInArea<TEntityType>(rb.Entity.Position, radius, this.FieldOfView);
 
-            if (this.evaluator != null)
+            if (this.Evaluator != null)
             {
-                return entities.Where(this.evaluator).ToList();
+                return entities.Where(this.Evaluator).ToList();
             }
             else
             {

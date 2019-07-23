@@ -9,8 +9,6 @@
     [BehaviorCategory(BehaviorCategory.Task)]
     public class NavigateNode : BehaviorTreeNode
     {
-        private readonly string walkToKey;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigateNode"/> class.
         /// </summary>
@@ -22,16 +20,21 @@
                 throw new ArgumentNullException(nameof(walkToKey));
             }
 
-            this.walkToKey = walkToKey;
+            this.WalkToKey = walkToKey;
         }
+
+        /// <summary>
+        /// Gets blackboard Property key for storing where we will walk.
+        /// </summary>
+        public string WalkToKey { get; }
 
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
-            if (blackboard.HasProperty<Coord>(this.walkToKey) &&
+            if (blackboard.HasProperty<Coord>(this.WalkToKey) &&
                 blackboard is RogueBlackboard rb)
             {
-                var walkTo = blackboard.GetProperty<Coord>(this.walkToKey);
+                var walkTo = blackboard.GetProperty<Coord>(this.WalkToKey);
                 if (walkTo == rb.Entity.Position)
                 {
                     return BehaviorReturnCode.Success;
