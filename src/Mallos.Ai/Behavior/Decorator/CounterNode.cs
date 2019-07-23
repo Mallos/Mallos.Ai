@@ -39,7 +39,7 @@
         /// <inheritdoc />
         protected override BehaviorReturnCode Behave(Blackboard blackboard)
         {
-            var counter = blackboard.Increment(this.CounterKey);
+            var counter = blackboard.Increment(this.CounterKey, 1);
             if (counter < this.MaxCount)
             {
                 return BehaviorReturnCode.Running;

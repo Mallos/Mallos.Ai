@@ -12,7 +12,7 @@
             return blackboard.Properties.ContainsKey(name) && blackboard.Properties[name] is T;
         }
 
-        public static int Increment(this Blackboard blackboard, string name, int amount = 1)
+        public static int Increment(this Blackboard blackboard, string name, int amount)
         {
             if (!blackboard.Properties.ContainsKey(name))
             {
@@ -25,7 +25,7 @@
             return newNumber;
         }
 
-        public static float Increment(this Blackboard blackboard, string name, float amount = 1.0f)
+        public static float Increment(this Blackboard blackboard, string name, float amount)
         {
             if (!blackboard.Properties.ContainsKey(name))
             {
