@@ -8,6 +8,7 @@
     /// A node that execute a random child node.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Composite)]
+    [Serializable]
     public class RandomSelectorNode : BehaviorTreeNode, IBehaviorTreeNodeChildren
     {
         /// <summary>

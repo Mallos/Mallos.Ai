@@ -6,6 +6,7 @@
     /// A lambda node.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Task)]
+    [System.Serializable]
     public class ActionNode : BehaviorTreeNode
     {
         /// <summary>

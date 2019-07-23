@@ -5,6 +5,7 @@
     /// <summary>
     /// The base class for all behavior tree nodes.
     /// </summary>
+    [Serializable]
     public abstract class BehaviorTreeNode
     {
         /// <summary>

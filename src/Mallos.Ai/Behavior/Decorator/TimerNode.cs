@@ -6,6 +6,7 @@
     /// A node that executes after a given amount of time in seconds have passed.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Decorator)]
+    [Serializable]
     public class TimerNode : BehaviorTreeNode, IBehaviorTreeNodeChild
     {
         /// <summary>

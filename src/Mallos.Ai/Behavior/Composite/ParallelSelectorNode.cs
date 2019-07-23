@@ -13,6 +13,7 @@
     /// - Returns Failure if all behavior components returned Failure.
     /// </remarks>
     [BehaviorCategory(BehaviorCategory.Composite)]
+    [System.Serializable]
     public class ParallelSelectorNode : BehaviorTreeNode, IBehaviorTreeNodeChildren
     {
         /// <summary>

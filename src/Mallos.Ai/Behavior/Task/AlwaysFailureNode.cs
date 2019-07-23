@@ -5,6 +5,7 @@
     /// return <see cref="BehaviorTreeNode.Failure"/>.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Task)]
+    [System.Serializable]
     public class AlwaysFailureNode : BehaviorTreeNode
     {
         /// <inheritdoc />

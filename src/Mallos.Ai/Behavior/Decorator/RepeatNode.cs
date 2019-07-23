@@ -6,6 +6,7 @@
     /// A node that repeats itself for a specified amount of times.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Decorator)]
+    [Serializable]
     public class RepeatNode : BehaviorTreeNode, IBehaviorTreeNodeChild
     {
         /// <summary>

@@ -5,6 +5,7 @@
     /// return <see cref="BehaviorTreeNode.Success"/>.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Task)]
+    [System.Serializable]
     public class AlwaysSuccessNode : BehaviorTreeNode
     {
         /// <inheritdoc />

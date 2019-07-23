@@ -6,6 +6,7 @@
     /// A node that retries on <see cref="BehaviorReturnCode.Failure"/>.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Decorator)]
+    [Serializable]
     public class RetryNode : BehaviorTreeNode, IBehaviorTreeNodeChild
     {
         /// <summary>

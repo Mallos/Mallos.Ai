@@ -13,6 +13,7 @@
     /// - Does not Return Running.
     /// </remarks>
     [BehaviorCategory(BehaviorCategory.Composite)]
+    [System.Serializable]
     public class ParallelSequenceNode : BehaviorTreeNode, IBehaviorTreeNodeChildren
     {
         /// <summary>

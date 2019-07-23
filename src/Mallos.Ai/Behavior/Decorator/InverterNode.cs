@@ -6,6 +6,7 @@
     /// A node that invert the given node result.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Decorator)]
+    [Serializable]
     public class InverterNode : BehaviorTreeNode, IBehaviorTreeNodeChild
     {
         /// <summary>

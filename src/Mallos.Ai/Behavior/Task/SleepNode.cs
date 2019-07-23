@@ -5,6 +5,7 @@
     /// and be active for a specified time.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Task)]
+    [System.Serializable]
     public class SleepNode : BehaviorTreeNode
     {
         /// <summary>

@@ -9,6 +9,7 @@
     /// doesn't complete within the time then fail the node.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Decorator)]
+    [Serializable]
     public class TimeoutNode : BehaviorTreeNode, IBehaviorTreeNodeChild
     {
         /// <summary>

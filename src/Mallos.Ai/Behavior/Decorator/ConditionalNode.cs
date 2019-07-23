@@ -7,6 +7,7 @@
     /// the 2 nodes depending on the condition.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Decorator)]
+    [Serializable]
     public class ConditionalNode : BehaviorTreeNode
     {
         /// <summary>

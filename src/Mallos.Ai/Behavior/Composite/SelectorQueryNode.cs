@@ -8,6 +8,7 @@
     /// A node that selects the child depending on the passed function.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Composite)]
+    [Serializable]
     public class SelectorQueryNode : BehaviorTreeNode, IBehaviorTreeNodeChildren
     {
         /// <summary>

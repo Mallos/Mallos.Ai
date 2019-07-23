@@ -6,6 +6,7 @@
     /// A node that will only execute a number of times.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Decorator)]
+    [Serializable]
     public class CounterNode : BehaviorTreeNode, IBehaviorTreeNodeChild
     {
         /// <summary>

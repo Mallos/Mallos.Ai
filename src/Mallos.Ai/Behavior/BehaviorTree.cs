@@ -8,6 +8,7 @@
     /// <summary>
     /// The behavior tree.
     /// </summary>
+    [Serializable]
     public class BehaviorTree : IEnumerable<BehaviorTreeNode>
     {
         private readonly BehaviorTreeNode rootNode;

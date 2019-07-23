@@ -13,6 +13,7 @@
     /// - Returns Failure if all behavior components returned Failure or an error has occured.
     /// </remarks>
     [BehaviorCategory(BehaviorCategory.Composite)]
+    [System.Serializable]
     public class SequenceNode : BehaviorTreeNode, IBehaviorTreeNodeChildren
     {
         /// <summary>

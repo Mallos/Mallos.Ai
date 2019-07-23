@@ -6,6 +6,7 @@
     /// A node that might execute the child node with probability function.
     /// </summary>
     [BehaviorCategory(BehaviorCategory.Decorator)]
+    [Serializable]
     public class RandomDecoratorNode : BehaviorTreeNode, IBehaviorTreeNodeChild
     {
         /// <summary>
