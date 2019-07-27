@@ -10,7 +10,7 @@
 
         public DialogTreeRunner(
             DialogTree dialogTree,
-            IDialogTextProcessor[] textProcessors = null)
+            ITextProcessor[] textProcessors = null)
         {
         }
 

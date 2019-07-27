@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Mallos.Ai</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Rant" Version="3.0.531" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mallos.Ai\Mallos.Ai.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -28,6 +28,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SadConsole.GoRogue", "dep\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DialogTreeSample", "samples\DialogTreeSample\DialogTreeSample.csproj", "{D43FC2CA-317B-4F2D-A754-A70CDAFA449A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mallos.Ai.Rant", "src\Mallos.Ai.Rant\Mallos.Ai.Rant.csproj", "{C9BCEAFA-E84C-4904-9135-02D0D3EB36CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{D43FC2CA-317B-4F2D-A754-A70CDAFA449A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D43FC2CA-317B-4F2D-A754-A70CDAFA449A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D43FC2CA-317B-4F2D-A754-A70CDAFA449A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9BCEAFA-E84C-4904-9135-02D0D3EB36CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9BCEAFA-E84C-4904-9135-02D0D3EB36CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9BCEAFA-E84C-4904-9135-02D0D3EB36CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9BCEAFA-E84C-4904-9135-02D0D3EB36CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{3A05163A-22B9-4CC3-8E95-25992346D17E} = {39D7CB70-98D2-4E3C-9D0B-68033E86C586}
 		{052D25D4-FE94-4820-9CDC-98969EA8A616} = {7E1DD600-0778-40F1-91AB-53E5B5173D82}
 		{D43FC2CA-317B-4F2D-A754-A70CDAFA449A} = {32E8C64F-0AEB-4222-BCF6-0DD9E09A2DCE}
+		{C9BCEAFA-E84C-4904-9135-02D0D3EB36CD} = {39D7CB70-98D2-4E3C-9D0B-68033E86C586}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D1D27B2-00B1-4652-A93C-8A352929F9AF}

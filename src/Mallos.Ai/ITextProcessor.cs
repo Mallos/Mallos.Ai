@@ -1,6 +1,6 @@
-﻿namespace Mallos.Ai.Dialog
+﻿namespace Mallos.Ai
 {
-    public interface IDialogTextProcessor
+    public interface ITextProcessor
     {
         string Process(string text, Blackboard blackboard);
     }
