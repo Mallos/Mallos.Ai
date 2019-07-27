@@ -8,7 +8,7 @@
     {
         public RantEngine RantEngine { get; }
 
-        public RantTextProcessor(RantEngine rantEngine)
+        public RantTextProcessor(RantEngine rantEngine = null)
         {
             this.RantEngine = rantEngine ?? new RantEngine();
         }
