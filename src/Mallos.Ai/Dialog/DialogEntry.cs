@@ -1,6 +1,6 @@
-namespace Mallos.Ai.Dialog
+﻿namespace Mallos.Ai.Dialog
 {
-    public readonly struct DialogEntry
+    public readonly struct DialogEntity
     {
         public readonly bool IsChoice;
         public readonly string Text;

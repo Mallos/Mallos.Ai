@@ -1,4 +1,5 @@
 ﻿using System;
+using Mallos.Ai.Dialog;
 
 namespace DialogTreeSample
 {
@@ -11,7 +12,7 @@ namespace DialogTreeSample
 
             // Create a running instance of the tree.
             var tree = new DialogTreeRunner(
-                dialogTree
+                dialogTree,
                 textProcessors: null
             );
 
@@ -19,26 +20,26 @@ namespace DialogTreeSample
             {
                 if (tree.IsChoice)
                 {
-                    if (tree.CurrentNodes.Length == 1)
+                    if (tree.CurrentOptions.Length == 1)
                     {
-                        var choice = tree.CurrentChoices[0];
-                        Console.WriteLine($".{choice.Key}, {choice.Text}");
+                        var choice = tree.CurrentOptions[0];
+                        Console.WriteLine($".1, {choice}");
                         Console.ReadLine();
                     }
                     else
                     {
-                        foreach (var choice in tree.CurrentNodes)
+                        for (int i = 0; i < tree.CurrentOptions.Length; i++)
                         {
-                            Console.WriteLine($".{choice.Key}, {choice.Text}");
+                            Console.WriteLine($".{i + 1}, {tree.CurrentOptions[i]}");
                         }
 
-                        var option = ConsoleReadNumber(tree.CurrentNodes.Length);
+                        var option = ConsoleReadNumber(tree.CurrentOptions.Length);
                         tree.Next(option);
                     }
                 }
                 else
                 {
-                    Console.WriteLine(tree.CurrentNodes[0].Text);
+                    Console.WriteLine(tree.CurrentOptions[0]);
                     Console.ReadLine();
                     tree.Next();
                 }
