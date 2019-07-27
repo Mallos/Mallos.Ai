@@ -1,0 +1,17 @@
+{
+	"folders": [
+    {
+      "path": "src/Mallos.Ai"
+    },
+    {
+      "path": "test/Mallos.Ai.Test"
+    },
+    {
+      "path": "src/Mallos.Ai.SadRogue"
+    },
+    {
+      "path": "samples/GoRogueSample"
+    }
+  ],
+  "settings": {}
+}
