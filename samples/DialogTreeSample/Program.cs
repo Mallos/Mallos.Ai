@@ -73,7 +73,7 @@ namespace DialogTreeSample
             Console.ForegroundColor = ConsoleColor.DarkGray;
             foreach (var history in runner.History)
             {
-                Console.WriteLine(history.Item1.Text);
+                Console.WriteLine(history.State.Text);
             }
             Console.ForegroundColor = tmp;
             Console.WriteLine();
