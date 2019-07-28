@@ -20,15 +20,15 @@
             Assert.True(runner.Next());
 
             Assert.True(runner.IsActive);
-            Assert.False(runner.IsChoice);
-            Assert.Equal(helloText, runner.CurrentText);
-            Assert.Equal(goodbyeText, runner.CurrentOptions[0]);
+            Assert.False(runner.State.IsChoice);
+            Assert.Equal(helloText, runner.State.Text);
+            Assert.Equal(goodbyeText, runner.State.Choices[0].Text);
 
             Assert.True(runner.Next());
 
             Assert.False(runner.IsActive);
-            Assert.True(runner.IsChoice);
-            Assert.Equal(goodbyeText, runner.CurrentText);
+            Assert.True(runner.State.IsChoice);
+            Assert.Equal(goodbyeText, runner.State.Text);
         }
 
         [Fact]
@@ -49,17 +49,16 @@
             Assert.True(runner.Next());
 
             Assert.True(runner.IsActive);
-            Assert.False(runner.IsChoice);
-            Assert.Equal(helloText, runner.CurrentText);
-            Assert.Equal(thankYouText, runner.CurrentOptions[0]);
-            Assert.Equal(goodbyeText, runner.CurrentOptions[1]);
+            Assert.False(runner.State.IsChoice);
+            Assert.Equal(helloText, runner.State.Text);
+            Assert.Equal(thankYouText, runner.State.Choices[0].Text);
+            Assert.Equal(goodbyeText, runner.State.Choices[1].Text);
 
-            Assert.False(runner.Next(-1));
-            Assert.True(runner.Next(1));
+            Assert.True(runner.Next(runner.State.Choices[1].Guid));
 
             Assert.False(runner.IsActive);
-            Assert.True(runner.IsChoice);
-            Assert.Equal(goodbyeText, runner.CurrentText);
+            Assert.True(runner.State.IsChoice);
+            Assert.Equal(goodbyeText, runner.State.Text);
         }
 
         [Fact]
@@ -80,8 +79,8 @@
             Assert.True(runner.Next());
 
             Assert.False(runner.IsActive);
-            Assert.False(runner.IsChoice);
-            Assert.Equal(rantText, runner.CurrentText);
+            Assert.False(runner.State.IsChoice);
+            Assert.Equal(rantText, runner.State.Text);
         }
     }
 }

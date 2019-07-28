@@ -25,25 +25,27 @@ namespace DialogTreeSample
             {
                 PrintHistory(runner);
 
-                if (runner.CurrentOptions != null)
+                if (runner.State.Choices.Length > 0)
                 {
-                    if (runner.CurrentOptions.Length == 1)
+                    if (runner.State.Choices.Length == 1)
                     {
-                        Console.WriteLine($"{runner.CurrentOptions[0]}");
+                        Console.WriteLine($"{runner.State.Choices[0].Text}");
 
                         Console.WriteLine();
+                        Console.WriteLine("[ENTER]");
                         Console.ReadKey();
                         runner.Next();
                     }
                     else
                     {
-                        for (int i = 0; i < runner.CurrentOptions.Length; i++)
+                        for (int i = 0; i < runner.State.Choices.Length; i++)
                         {
-                            Console.WriteLine($"{i + 1}. {runner.CurrentOptions[i]}");
+                            Console.WriteLine($"{i + 1}. {runner.State.Choices[i].Text}");
                         }
 
-                        var option = ConsoleReadNumber(runner.CurrentOptions.Length);
-                        runner.Next(option);
+                        var input = ConsoleReadNumber(runner.State.Choices.Length);
+                        var key = runner.State.Choices[input].Guid;
+                        runner.Next(key);
                     }
                 }
                 else
@@ -68,7 +70,7 @@ namespace DialogTreeSample
             Console.ForegroundColor = ConsoleColor.DarkGray;
             foreach (var history in runner.History)
             {
-                Console.WriteLine(history);
+                Console.WriteLine(history.Item1.Text);
             }
             Console.ForegroundColor = tmp;
             Console.WriteLine();
@@ -79,7 +81,7 @@ namespace DialogTreeSample
             while (true)
             {
                 Console.WriteLine();
-                Console.Write("Select: ");
+                Console.Write("[SELECT]: ");
 
                 var input = Console.ReadKey();
                 int.TryParse(input.KeyChar.ToString(), out var number);

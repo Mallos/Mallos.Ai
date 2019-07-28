@@ -2,100 +2,118 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
 
+    /// <inheritdoc />
     public class DialogTreeRunner : IDialogTreeRunner
     {
-        private bool initialized = false;
-        private readonly List<string> history = new List<string>();
+        private readonly List<(DialogState, Guid)> history = new List<(DialogState, Guid)>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DialogTreeRunner"/> class.
+        /// </summary>
+        /// <param name="source">the dialog tree source.</param>
+        /// <param name="textProcessors">Tht text processors.</param>
         public DialogTreeRunner(
             DialogTree source,
             ITextProcessor[] textProcessors = null)
         {
-            this.IsActive = true;
             this.Source = source;
             this.TextProcessors = textProcessors;
         }
 
-        public IReadOnlyList<string> History => history;
+        /// <inheritdoc />
+        public bool IsInitialized { get; private set; } = false;
 
+        /// <inheritdoc />
+        public bool IsActive { get; private set; } = true;
+
+        /// <inheritdoc />
+        public DialogState State { get; private set; }
+
+        /// <summary>
+        /// Gets the text processors.
+        /// </summary>
         public ITextProcessor[] TextProcessors { get; }
 
-        public bool IsActive { get; private set; }
+        public IReadOnlyList<(DialogState, Guid)> History => history;
 
-        public bool IsChoice => this.CurrentNode.IsChoice;
-
-        public string CurrentText { get; private set; }
-
-        public string[] CurrentOptions { get; private set; }
-
+        /// <summary>
+        /// Gets the source <see cref="DialogTree"/>.
+        /// </summary>
         protected DialogTree Source { get; }
 
-        protected DialogEntity CurrentNode { get; private set; }
-
-        protected Guid CurrentNodeKey { get; private set; }
-
-        protected Guid[] CurrentOptionsKeys { get; private set; }
-
-        public bool Next(int index = 0, Blackboard blackboard = null)
+        /// <inheritdoc />
+        public bool Next(Guid? key = null, Blackboard blackboard = null)
         {
-            if (!this.initialized)
+            if (!this.IsInitialized)
             {
                 this.UpdateCurrent(this.Source.RootNode, blackboard);
-                this.initialized = true;
+                this.IsInitialized = true;
                 return true;
             }
 
             if (!this.IsActive)
             {
-                // FIXME: Throw an exception here.
-                return false;
+                throw new ArgumentException($"Runner is not active.");
             }
 
-            if (index < 0 || index > CurrentOptionsKeys.Length)
+            if (this.State.Choices.Length == 0)
             {
-                // FIXME: Throw an exception here.
                 return false;
             }
 
-            var nextGuid = CurrentOptionsKeys[index];
-
-            this.UpdateCurrent(nextGuid, blackboard);
-
+            var choice = key.HasValue ? this.State.Choices.First(c => c.Guid == key) : this.State.Choices.First();
+            this.UpdateCurrent(choice.Guid, blackboard);
             return true;
         }
 
-        protected virtual void BeforeNext(Guid oldKey, Guid newKey)
+        /// <summary>
+        /// Called before we update to the state.
+        /// </summary>
+        /// <param name="oldState">The old state.</param>
+        /// <param name="newState">The new state.</param>
+        protected virtual void BeforeNext(DialogState oldState, DialogState newState)
         {
         }
 
         private void UpdateCurrent(Guid nodeKey, Blackboard blackboard)
         {
-            this.BeforeNext(this.CurrentNodeKey, nodeKey);
-            this.CurrentNodeKey = nodeKey;
-            this.CurrentNode = this.Source.GetNode(nodeKey);
-            this.CurrentText = ProcessEntityForText(this.CurrentNode, blackboard);
+            var newNode = this.Source.GetNode(nodeKey);
+            var newNodeLinks = this.Source.GetLinks(nodeKey);
 
-            this.history.Add(this.CurrentText);
+            var newState = new DialogState(
+                newNode.IsChoice,
+                (blackboard != null) ? blackboard.Guid : Guid.Empty,
+                this.ProcessEntityForText(newNode, blackboard),
+                this.ProcessLinks(newNodeLinks, blackboard));
 
-            this.CurrentOptionsKeys = this.Source.GetLinks(nodeKey);
-            if (this.CurrentOptionsKeys == null)
+            this.BeforeNext(newState, this.State);
+
+            this.IsActive = newState.Choices.Length > 0;
+            this.State = newState;
+            this.history.Add((this.State, newState.Sender));
+        }
+
+        private DialogChoice[] ProcessLinks(Guid[] links, Blackboard blackboard)
+        {
+            if (links == null)
             {
-                this.IsActive = false;
-                this.CurrentOptions = null;
+                return new DialogChoice[0];
             }
-            else
-            {
-                var nodes = this.CurrentOptionsKeys.Select(key => this.Source.GetNode(key));
 
-                this.ValidateNodes(nodes);
+            return links
+                .Select(key =>
+                {
+                    var node = this.Source.GetNode(key);
 
-                this.CurrentOptions = nodes
-                    .Select(node => ProcessEntityForText(node, blackboard))
-                    .ToArray();
-            }
+                    return new DialogChoice(
+                        key,
+                        null,
+                        ProcessEntityForText(node, blackboard),
+                        false);
+                })
+                .ToArray();
         }
 
         private string ProcessEntityForText(DialogEntity entity, Blackboard blackboard)
@@ -113,18 +131,6 @@
             else
             {
                 return entity.Text;
-            }
-        }
-
-        [Conditional("DEBUG")]
-        private void ValidateNodes(IEnumerable<DialogEntity> entities)
-        {
-            var first = entities.First();
-            var valid = entities.Skip(1).All(entity => entity.IsChoice == first.IsChoice);
-
-            if (!valid)
-            {
-                throw new InvalidOperationException("Mixing Nodes and Choices is not possible.");
             }
         }
     }

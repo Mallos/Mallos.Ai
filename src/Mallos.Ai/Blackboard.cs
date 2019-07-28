@@ -9,6 +9,20 @@
     public class Blackboard
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Blackboard"/> class.
+        /// </summary>
+        /// <param name="guid">A unique id.</param>
+        public Blackboard(Guid? guid = null)
+        {
+            this.Guid = guid.HasValue ? guid.Value : Guid.NewGuid();
+        }
+
+        /// <summary>
+        /// Gets a unique id for the Blackboard.
+        /// </summary>
+        public Guid Guid { get; }
+
+        /// <summary>
         /// Gets or sets the elapsed time.
         /// This is necessary for some nodes to work.
         /// </summary>
