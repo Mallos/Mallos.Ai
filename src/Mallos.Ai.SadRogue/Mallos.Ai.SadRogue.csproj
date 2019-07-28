@@ -30,11 +30,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="SadConsole" Version="8.8.1" />
+    <PackageReference Include="SadConsole.GoRogueHelpers" Version="1.0.0-alpha2-debug" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\dep\SadConsole.GoRogueHelpers\src\SadConsole.GoRogue.csproj" />
     <ProjectReference Include="..\Mallos.Ai\Mallos.Ai.csproj" />
   </ItemGroup>
 
