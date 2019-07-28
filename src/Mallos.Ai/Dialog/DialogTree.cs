@@ -5,37 +5,77 @@
 
     public class DialogTree : IDialogTree
     {
-        private Dictionary<Guid, DialogEntity> nodes = new Dictionary<Guid, DialogEntity>();
-        private Dictionary<Guid, List<Guid>> links = new Dictionary<Guid, List<Guid>>();
+        public Guid RootNode { get; private set; }
+
+        private readonly Dictionary<Guid, DialogEntity> nodes = new Dictionary<Guid, DialogEntity>();
+        private readonly Dictionary<Guid, List<Guid>> links = new Dictionary<Guid, List<Guid>>();
+        private readonly Dictionary<Guid, Dictionary<string, object>> properties = new Dictionary<Guid, Dictionary<string, object>>();
+
+        public IReadOnlyDictionary<string, object> GetProperties(Guid nodeKey)
+        {
+            properties.TryGetValue(nodeKey, out var value);
+            return value;
+        }
 
         public void AddProperty(Guid nodeKey, string key, object value)
         {
+            if (!properties.ContainsKey(nodeKey))
+            {
+                properties[nodeKey] = new Dictionary<string, object>();
+            }
+
+            properties[nodeKey][key] = value;
+        }
+
+        public DialogEntity GetNode(Guid nodeKey)
+        {
+            nodes.TryGetValue(nodeKey, out var value);
+            return value;
         }
 
         public Guid AddNode(string text)
         {
-            var key = Guid.NewGuid();
-            nodes[key] = new DialogEntity(false, text);
-            return key;
+            return AddNewNode(new DialogEntity(false, text));
         }
 
         public Guid AddChoice(string text)
         {
-            var key = Guid.NewGuid();
-            nodes[key] = new DialogEntity(true, text);
-            return key;
+            return AddNewNode(new DialogEntity(true, text));
         }
 
-        public void AddLink(Guid node, params Guid[] nodes)
+        public Guid[] GetLinks(Guid nodeKey)
         {
-            if (links.ContainsKey(node))
+            if (links.ContainsKey(nodeKey))
             {
-                links[node].AddRange(nodes);
+                return links[nodeKey].ToArray();
+            }
+
+            return null;
+        }
+
+        public void AddLink(Guid nodeKey, params Guid[] nodes)
+        {
+            if (links.ContainsKey(nodeKey))
+            {
+                links[nodeKey].AddRange(nodes);
             }
             else
             {
-                links[node] = new List<Guid>(nodes);
+                links[nodeKey] = new List<Guid>(nodes);
             }
+        }
+
+        private Guid AddNewNode(DialogEntity entity)
+        {
+            var key = Guid.NewGuid();
+
+            if (nodes.Count == 0)
+            {
+                this.RootNode = key;
+            }
+
+            nodes[key] = entity;
+            return key;
         }
     }
 }

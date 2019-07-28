@@ -6,8 +6,10 @@
 
         bool IsChoice { get; }
 
+        string CurrentText { get; }
+
         string[] CurrentOptions { get; }
 
-        bool Next(int index = 0);
+        bool Next(int index = 0, Blackboard blackboard = null);
     }
 }

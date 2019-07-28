@@ -8,48 +8,54 @@ namespace DialogTreeSample
         static void Main(string[] args)
         {
             // Create the dialog tree.
-            var dialogTree = CreateDialogTree();
+            var tree = CreateDialogTree();
 
             // Create a running instance of the tree.
-            var tree = new DialogTreeRunner(
-                dialogTree,
+            var runner = new DialogTreeRunner(
+                tree,
                 textProcessors: null
             );
 
-            do
+            runner.Next();
+
+            while (runner.IsActive)
             {
-                if (tree.IsChoice)
+                Console.WriteLine(runner.CurrentText);
+                Console.WriteLine();
+
+                if (runner.CurrentOptions != null)
                 {
-                    if (tree.CurrentOptions.Length == 1)
+                    for (int i = 0; i < runner.CurrentOptions.Length; i++)
                     {
-                        var choice = tree.CurrentOptions[0];
-                        Console.WriteLine($".1, {choice}");
+                        Console.WriteLine($"{i + 1}. {runner.CurrentOptions[i]}");
+                    }
+
+                    if (runner.CurrentOptions.Length == 1)
+                    {
                         Console.ReadLine();
+                        runner.Next();
                     }
                     else
                     {
-                        for (int i = 0; i < tree.CurrentOptions.Length; i++)
-                        {
-                            Console.WriteLine($".{i + 1}, {tree.CurrentOptions[i]}");
-                        }
-
-                        var option = ConsoleReadNumber(tree.CurrentOptions.Length);
-                        tree.Next(option);
+                        var option = ConsoleReadNumber(runner.CurrentOptions.Length);
+                        runner.Next(option);
                     }
                 }
                 else
                 {
-                    Console.WriteLine(tree.CurrentOptions[0]);
                     Console.ReadLine();
-                    tree.Next();
+                    runner.Next();
                 }
-            } while (tree.IsActive);
+
+                Console.Clear();
+            }
         }
 
         static int ConsoleReadNumber(int max)
         {
             while (true)
             {
+                Console.WriteLine();
                 Console.Write("Select: ");
 
                 var input = Console.ReadLine();
@@ -84,6 +90,8 @@ namespace DialogTreeSample
             var r_2         = tree.AddChoice("So who are you anyway?");
             var r_2__1      = tree.AddNode("I'm the dialog guy of course!");
 
+            tree.AddLink(r__1_1, r_2);
+            tree.AddLink(r__2_1, r_2);
             tree.AddLink(r_2, r_2__1);
 
             var r_3         = tree.AddChoice("Investigate");
