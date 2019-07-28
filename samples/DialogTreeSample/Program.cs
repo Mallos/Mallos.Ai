@@ -1,4 +1,5 @@
 ﻿using System;
+using Mallos.Ai;
 using Mallos.Ai.Dialog;
 
 namespace DialogTreeSample
@@ -13,42 +14,64 @@ namespace DialogTreeSample
             // Create a running instance of the tree.
             var runner = new DialogTreeRunner(
                 tree,
-                textProcessors: null
+                textProcessors: new ITextProcessor[] {
+                    new RantTextProcessor()
+                }
             );
 
             runner.Next();
 
             while (runner.IsActive)
             {
-                Console.WriteLine(runner.CurrentText);
-                Console.WriteLine();
+                PrintHistory(runner);
 
                 if (runner.CurrentOptions != null)
                 {
-                    for (int i = 0; i < runner.CurrentOptions.Length; i++)
-                    {
-                        Console.WriteLine($"{i + 1}. {runner.CurrentOptions[i]}");
-                    }
-
                     if (runner.CurrentOptions.Length == 1)
                     {
-                        Console.ReadLine();
+                        Console.WriteLine($"{runner.CurrentOptions[0]}");
+
+                        Console.WriteLine();
+                        Console.ReadKey();
                         runner.Next();
                     }
                     else
                     {
+                        for (int i = 0; i < runner.CurrentOptions.Length; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {runner.CurrentOptions[i]}");
+                        }
+
                         var option = ConsoleReadNumber(runner.CurrentOptions.Length);
                         runner.Next(option);
                     }
                 }
                 else
                 {
-                    Console.ReadLine();
+                    Console.WriteLine();
+                    Console.ReadKey();
                     runner.Next();
                 }
 
                 Console.Clear();
             }
+
+            PrintHistory(runner);
+
+            Console.WriteLine("[END]");
+            Console.ReadKey();
+        }
+
+        static void PrintHistory(DialogTreeRunner runner)
+        {
+            var tmp = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            foreach (var history in runner.History)
+            {
+                Console.WriteLine(history);
+            }
+            Console.ForegroundColor = tmp;
+            Console.WriteLine();
         }
 
         static int ConsoleReadNumber(int max)
@@ -58,15 +81,11 @@ namespace DialogTreeSample
                 Console.WriteLine();
                 Console.Write("Select: ");
 
-                var input = Console.ReadLine();
-                int.TryParse(input, out var number);
-                if (number >= 0 || number < max)
+                var input = Console.ReadKey();
+                int.TryParse(input.KeyChar.ToString(), out var number);
+                if (number > 0 || number < max)
                 {
                     return number - 1;
-                }
-                else
-                {
-                    Console.WriteLine("Enter a valid number.");
                 }
             }
         }
@@ -97,7 +116,7 @@ namespace DialogTreeSample
             var r_3         = tree.AddChoice("Investigate");
             var r_3__1      = tree.AddChoice("Nevermind.");
             var r_3__2      = tree.AddChoice("What is your favorite color?");
-            var r_3__2_1    = tree.AddNode("Red.");
+            var r_3__2_1    = tree.AddNode("[vl: colors][ladd: colors; Red;Green;Blue][lrand: colors].");
             var r_3__3      = tree.AddChoice("How long have you been here?");
             var r_3__3_1    = tree.AddNode("A while.");
 

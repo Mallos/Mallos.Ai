@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Mallos.Ai.Rant\Mallos.Ai.Rant.csproj" />
     <ProjectReference Include="..\..\src\Mallos.Ai\Mallos.Ai.csproj" />
   </ItemGroup>
 

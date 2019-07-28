@@ -8,6 +8,7 @@
     public class DialogTreeRunner : IDialogTreeRunner
     {
         private bool initialized = false;
+        private readonly List<string> history = new List<string>();
 
         public DialogTreeRunner(
             DialogTree source,
@@ -17,6 +18,8 @@
             this.Source = source;
             this.TextProcessors = textProcessors;
         }
+
+        public IReadOnlyList<string> History => history;
 
         public ITextProcessor[] TextProcessors { get; }
 
@@ -74,6 +77,8 @@
             this.CurrentNodeKey = nodeKey;
             this.CurrentNode = this.Source.GetNode(nodeKey);
             this.CurrentText = ProcessEntityForText(this.CurrentNode, blackboard);
+
+            this.history.Add(this.CurrentText);
 
             this.CurrentOptionsKeys = this.Source.GetLinks(nodeKey);
             if (this.CurrentOptionsKeys == null)
