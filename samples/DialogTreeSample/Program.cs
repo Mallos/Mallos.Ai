@@ -42,10 +42,19 @@ namespace DialogTreeSample
                     {
                         for (int i = 0; i < runner.State.Choices.Length; i++)
                         {
+                            var node = runner.State.Choices[i];
+                            var color = node.CalledBefore ?
+                                ConsoleColor.DarkGray : ConsoleColor.Gray;
+
+                            var props = runner.Source.GetProperties(node.Guid);
+                            if (props != null && props.ContainsKey("color"))
+                            {
+                                color = (ConsoleColor)props["color"];
+                            }
+
                             WriteLineColor(
                                 $"{i + 1}. {runner.State.Choices[i].Text}",
-                                runner.State.Choices[i].CalledBefore ?
-                                ConsoleColor.DarkGray : ConsoleColor.Gray);
+                                color);
                         }
 
                         var input = ConsoleReadNumber(runner.State.Choices.Length);
@@ -115,6 +124,10 @@ namespace DialogTreeSample
             var r__2        = tree.AddChoice("Meh, been better.");
             var r__3        = tree.AddChoice("I'm grumpy.");
             var r__2_1      = tree.AddNode("I'm sorry to hear that.");
+
+            tree.AddProperty(r__1, "color", ConsoleColor.Green);
+            tree.AddProperty(r__2, "color", ConsoleColor.Yellow);
+            tree.AddProperty(r__3, "color", ConsoleColor.Red);
 
             tree.AddLink(r, r__1, r__2, r__3);
             tree.AddLink(r__1, r__1_1);

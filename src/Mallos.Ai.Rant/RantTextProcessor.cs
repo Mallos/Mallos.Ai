@@ -1,6 +1,7 @@
 ﻿namespace Mallos.Ai
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using Rant;
 
@@ -13,7 +14,8 @@
             this.RantEngine = rantEngine ?? new RantEngine();
         }
 
-        public string Process(string text, Blackboard blackboard)
+        /// <inheritdoc />
+        public string Process(string text, Blackboard blackboard, IReadOnlyDictionary<string, object> properties = null)
         {
             // FIXME: Add the blackboard context to rant engine.
 

@@ -23,6 +23,9 @@
         }
 
         /// <inheritdoc />
+        public DialogTree Source { get; }
+
+        /// <inheritdoc />
         public bool IsInitialized { get; private set; } = false;
 
         /// <inheritdoc />
@@ -43,11 +46,6 @@
         /// This is only used for the current runner to get retrospect for the current instance.
         /// </remarks>
         public IReadOnlyList<DialogStateHistory> History => history;
-
-        /// <summary>
-        /// Gets the source <see cref="DialogTree"/>.
-        /// </summary>
-        protected DialogTree Source { get; }
 
         /// <inheritdoc />
         public bool Next(Guid? key = null, Blackboard blackboard = null)
@@ -91,8 +89,8 @@
             var newState = new DialogState(
                 newNode.IsChoice,
                 (blackboard != null) ? blackboard.Guid : Guid.Empty,
-                this.ProcessEntityForText(newNode, blackboard),
-                this.ProcessLinks(newNodeLinks, blackboard, nodeKey));
+                this.ProcessEntityForText(nodeKey, newNode, blackboard),
+                this.ProcessLinks(newNodeLinks, blackboard));
 
             this.BeforeNext(newState, this.State);
 
@@ -106,7 +104,7 @@
             this.history.Add(new DialogStateHistory(newState.Sender, this.State));
         }
 
-        private DialogChoice[] ProcessLinks(Guid[] links, Blackboard blackboard, Guid nodeKey)
+        private DialogChoice[] ProcessLinks(Guid[] links, Blackboard blackboard)
         {
             if (links == null)
             {
@@ -122,7 +120,7 @@
                     return new DialogChoice(
                         key,
                         null, // FIXME: Create Assigned to
-                        ProcessEntityForText(node, blackboard),
+                        ProcessEntityForText(key, node, blackboard),
                         visited);
                 })
                 .ToArray();
@@ -138,14 +136,16 @@
             return blackboard.DialogHistoryCollection.IsNodeVisited(this.Source.Guid, nodeKey);
         }
 
-        private string ProcessEntityForText(DialogEntity entity, Blackboard blackboard)
+        private string ProcessEntityForText(Guid nodeKey, DialogEntity entity, Blackboard blackboard)
         {
             if (this.TextProcessors != null && this.TextProcessors.Length > 0)
             {
+                var props = this.Source.GetProperties(nodeKey);
+
                 var result = entity.Text;
                 foreach (var processor in this.TextProcessors)
                 {
-                    result = processor.Process(result, blackboard);
+                    result = processor.Process(result, blackboard, props);
                 }
 
                 return result;

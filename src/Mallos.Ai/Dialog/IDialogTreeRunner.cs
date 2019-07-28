@@ -9,6 +9,11 @@
     public interface IDialogTreeRunner
     {
         /// <summary>
+        /// Gets the source <see cref="DialogTree"/>.
+        /// </summary>
+        DialogTree Source { get; }
+
+        /// <summary>
         /// Gets wether this is initialized.
         /// </summary>
         bool IsInitialized { get; }
