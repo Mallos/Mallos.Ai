@@ -11,7 +11,8 @@
             this.Dictionary = dictionary ?? new Dictionary<string, string>();
         }
 
-        public string Process(string text, Blackboard blackboard)
+        /// <inheritdoc />
+        public string Process(string text, Blackboard blackboard, IReadOnlyDictionary<string, object> properties = null)
         {
             if (this.Dictionary.TryGetValue(text, out string value))
             {
