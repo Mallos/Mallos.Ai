@@ -10,6 +10,11 @@
     public interface IDialogTree
     {
         /// <summary>
+        /// Gets the dialog tree id.
+        /// </summary>
+        Guid Guid { get; }
+
+        /// <summary>
         /// Gets the starting node in the tree.
         /// </summary>
         Guid RootNode { get; }

@@ -92,16 +92,21 @@
                 newNode.IsChoice,
                 (blackboard != null) ? blackboard.Guid : Guid.Empty,
                 this.ProcessEntityForText(newNode, blackboard),
-                this.ProcessLinks(newNodeLinks, blackboard));
+                this.ProcessLinks(newNodeLinks, blackboard, nodeKey));
 
             this.BeforeNext(newState, this.State);
+
+            if (blackboard != null)
+            {
+                blackboard.DialogHistoryCollection.UpdateVisitedNode(this.Source.Guid, nodeKey);
+            }
 
             this.IsActive = newState.Choices.Length > 0;
             this.State = newState;
             this.history.Add(new DialogStateHistory(newState.Sender, this.State));
         }
 
-        private DialogChoice[] ProcessLinks(Guid[] links, Blackboard blackboard)
+        private DialogChoice[] ProcessLinks(Guid[] links, Blackboard blackboard, Guid nodeKey)
         {
             if (links == null)
             {
@@ -112,14 +117,25 @@
                 .Select(key =>
                 {
                     var node = this.Source.GetNode(key);
+                    var visited = HasBeenVisited(blackboard, key);
 
                     return new DialogChoice(
                         key,
                         null, // FIXME: Create Assigned to
                         ProcessEntityForText(node, blackboard),
-                        false); // TODO: Add history on the blackboard.
+                        visited);
                 })
                 .ToArray();
+        }
+
+        private bool HasBeenVisited(Blackboard blackboard, Guid nodeKey)
+        {
+            if (blackboard == null)
+            {
+                return false;
+            }
+
+            return blackboard.DialogHistoryCollection.IsNodeVisited(this.Source.Guid, nodeKey);
         }
 
         private string ProcessEntityForText(DialogEntity entity, Blackboard blackboard)

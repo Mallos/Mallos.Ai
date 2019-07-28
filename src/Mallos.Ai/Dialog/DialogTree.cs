@@ -10,6 +10,18 @@
         private readonly Dictionary<Guid, List<Guid>> links = new Dictionary<Guid, List<Guid>>();
         private readonly Dictionary<Guid, Dictionary<string, object>> properties = new Dictionary<Guid, Dictionary<string, object>>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DialogTree"/> class.
+        /// </summary>
+        /// <param name="guid">A unique id.</param
+        public DialogTree(Guid? guid = null)
+        {
+            this.Guid = guid ?? Guid.NewGuid();
+        }
+
+        /// <inheritdoc />
+        public Guid Guid { get; }
+
         /// <inheritdoc />
         public Guid RootNode { get; private set; }
 

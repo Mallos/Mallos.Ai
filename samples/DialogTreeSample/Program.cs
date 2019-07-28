@@ -8,6 +8,8 @@ namespace DialogTreeSample
     {
         static void Main(string[] args)
         {
+            var blackboard = new Blackboard();
+
             // Create the dialog tree.
             var tree = CreateDialogTree();
 
@@ -19,7 +21,7 @@ namespace DialogTreeSample
                 }
             );
 
-            runner.Next();
+            runner.Next(blackboard: blackboard);
 
             while (runner.IsActive)
             {
@@ -34,7 +36,7 @@ namespace DialogTreeSample
                         Console.WriteLine();
                         Console.WriteLine("[ENTER]");
                         Console.ReadKey();
-                        runner.Next();
+                        runner.Next(blackboard: blackboard);
                     }
                     else
                     {
@@ -48,14 +50,14 @@ namespace DialogTreeSample
 
                         var input = ConsoleReadNumber(runner.State.Choices.Length);
                         var key = runner.State.Choices[input].Guid;
-                        runner.Next(key);
+                        runner.Next(key, blackboard: blackboard);
                     }
                 }
                 else
                 {
                     Console.WriteLine();
                     Console.ReadKey();
-                    runner.Next();
+                    runner.Next(blackboard: blackboard);
                 }
 
                 Console.Clear();
