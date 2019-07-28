@@ -1,6 +1,11 @@
 # Mallos.Ai
 A lightweight AI library designed for Games.
 
+|Project|Package|
+|---|---|
+|Mallos.Ai|[![Nuget](https://img.shields.io/nuget/v/Mallos.Ai)](https://www.nuget.org/packages/Mallos.Ai)|
+|Mallos.Ai.SadRogue|[![Nuget](https://img.shields.io/nuget/v/Mallos.Ai.SadRogue)](https://www.nuget.org/packages/Mallos.Ai.SadRogue)|
+
 ## Features
 - [x] Behavior Tree
 - [ ] Dialog Tree

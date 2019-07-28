@@ -22,10 +22,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoRogueSample", "samples\Go
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mallos.Ai.SadRogue", "src\Mallos.Ai.SadRogue\Mallos.Ai.SadRogue.csproj", "{3A05163A-22B9-4CC3-8E95-25992346D17E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dep", "dep", "{7E1DD600-0778-40F1-91AB-53E5B5173D82}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SadConsole.GoRogue", "dep\SadConsole.GoRogueHelpers\src\SadConsole.GoRogue.csproj", "{052D25D4-FE94-4820-9CDC-98969EA8A616}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,10 +44,6 @@ Global
 		{3A05163A-22B9-4CC3-8E95-25992346D17E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A05163A-22B9-4CC3-8E95-25992346D17E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A05163A-22B9-4CC3-8E95-25992346D17E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{052D25D4-FE94-4820-9CDC-98969EA8A616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{052D25D4-FE94-4820-9CDC-98969EA8A616}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{052D25D4-FE94-4820-9CDC-98969EA8A616}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{052D25D4-FE94-4820-9CDC-98969EA8A616}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,7 +53,6 @@ Global
 		{4A46715F-08B2-4D28-A168-6D6283F577E7} = {A7F516EE-B925-4BC2-B35D-9BD1DFE8AC49}
 		{6D061BDC-FBDE-4BA4-8297-9FF317B1AD4D} = {32E8C64F-0AEB-4222-BCF6-0DD9E09A2DCE}
 		{3A05163A-22B9-4CC3-8E95-25992346D17E} = {39D7CB70-98D2-4E3C-9D0B-68033E86C586}
-		{052D25D4-FE94-4820-9CDC-98969EA8A616} = {7E1DD600-0778-40F1-91AB-53E5B5173D82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D1D27B2-00B1-4652-A93C-8A352929F9AF}
