@@ -7,7 +7,7 @@
     /// <inheritdoc />
     public class DialogTreeRunner : IDialogTreeRunner
     {
-        private readonly List<(DialogState, Guid)> history = new List<(DialogState, Guid)>();
+        private readonly List<DialogStateHistory> history = new List<DialogStateHistory>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DialogTreeRunner"/> class.
@@ -36,7 +36,13 @@
         /// </summary>
         public ITextProcessor[] TextProcessors { get; }
 
-        public IReadOnlyList<(DialogState, Guid)> History => history;
+        /// <summary>
+        /// Gets the call history of this runner.
+        /// </summary>
+        /// <remarks>
+        /// This is only used for the current runner to get retrospect for the current instance.
+        /// </remarks>
+        public IReadOnlyList<DialogStateHistory> History => history;
 
         /// <summary>
         /// Gets the source <see cref="DialogTree"/>.
@@ -92,7 +98,7 @@
 
             this.IsActive = newState.Choices.Length > 0;
             this.State = newState;
-            this.history.Add((this.State, newState.Sender));
+            this.history.Add(new DialogStateHistory(newState.Sender, this.State));
         }
 
         private DialogChoice[] ProcessLinks(Guid[] links, Blackboard blackboard)
@@ -109,9 +115,9 @@
 
                     return new DialogChoice(
                         key,
-                        null,
+                        null, // FIXME: Create Assigned to
                         ProcessEntityForText(node, blackboard),
-                        false);
+                        false); // TODO: Add history on the blackboard.
                 })
                 .ToArray();
         }

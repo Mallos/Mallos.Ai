@@ -40,7 +40,10 @@ namespace DialogTreeSample
                     {
                         for (int i = 0; i < runner.State.Choices.Length; i++)
                         {
-                            Console.WriteLine($"{i + 1}. {runner.State.Choices[i].Text}");
+                            WriteLineColor(
+                                $"{i + 1}. {runner.State.Choices[i].Text}",
+                                runner.State.Choices[i].CalledBefore ?
+                                ConsoleColor.DarkGray : ConsoleColor.Gray);
                         }
 
                         var input = ConsoleReadNumber(runner.State.Choices.Length);
@@ -74,6 +77,14 @@ namespace DialogTreeSample
             }
             Console.ForegroundColor = tmp;
             Console.WriteLine();
+        }
+
+        static void WriteLineColor(string text, ConsoleColor color = ConsoleColor.DarkGray)
+        {
+            var tmp = Console.ForegroundColor;
+            Console.ForegroundColor = color;
+            Console.WriteLine(text);
+            Console.ForegroundColor = tmp;
         }
 
         static int ConsoleReadNumber(int max)
