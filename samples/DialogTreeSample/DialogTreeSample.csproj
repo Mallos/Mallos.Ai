@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Mallos.Ai.Rant\Mallos.Ai.Rant.csproj" />
+    <ProjectReference Include="..\..\src\Mallos.Ai\Mallos.Ai.csproj" />
+  </ItemGroup>
+
+</Project>

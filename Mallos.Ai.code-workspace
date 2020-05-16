@@ -11,6 +11,9 @@
     },
     {
       "path": "samples/GoRogueSample"
+    },
+    {
+      "path": "samples/DialogTreeSample"
     }
   ],
   "settings": {}

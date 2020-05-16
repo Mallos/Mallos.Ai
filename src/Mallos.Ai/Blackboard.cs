@@ -2,12 +2,31 @@
 {
     using System;
     using System.Collections.Generic;
+    using Mallos.Ai.Dialog;
 
     /// <summary>
     /// A blackboard is a central place to store and look up relevant data.
     /// </summary>
     public class Blackboard
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Blackboard"/> class.
+        /// </summary>
+        /// <param name="guid">A unique id.</param
+        /// <param name="dialogHistoryCollection">The dialog history provider.</param>
+        public Blackboard(
+            Guid? guid = null,
+            DialogHistoryCollection dialogHistoryCollection = null)
+        {
+            this.Guid = guid ?? Guid.NewGuid();
+            this.DialogHistoryCollection = dialogHistoryCollection ?? new DialogHistoryCollectionInMemory();
+        }
+
+        /// <summary>
+        /// Gets a unique id for the Blackboard.
+        /// </summary>
+        public Guid Guid { get; }
+
         /// <summary>
         /// Gets or sets the elapsed time.
         /// This is necessary for some nodes to work.
@@ -23,6 +42,11 @@
         /// Gets and set easily accessable properties.
         /// </summary>
         public Dictionary<string, object> Properties { get; } = new Dictionary<string, object>();
+
+        /// <summary>
+        /// Gets the dialog history provider.
+        /// </summary>
+        public DialogHistoryCollection DialogHistoryCollection { get; }
 
         /// <summary>
         /// Occures when we start to execute a <see cref="Behavior.BehaviorTree"/>.

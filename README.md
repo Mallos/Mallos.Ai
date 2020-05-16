@@ -7,8 +7,13 @@ A lightweight AI library designed for Games.
 |Mallos.Ai.SadRogue|[![Nuget](https://img.shields.io/nuget/v/Mallos.Ai.SadRogue)](https://www.nuget.org/packages/Mallos.Ai.SadRogue)|
 
 ## Features
-- [x] Behavior Tree
-- [ ] Dialog Tree
+- Behavior Tree
+  - A lot of different node types
+- Dialog Tree
+  - History
+  - Multiple Actors
+  - Node Properties
+  - Text Processors
 
 ### Supported Frameworks
 * [SadConsole with GoRogue](https://github.com/thesadrogue/SadConsole.GoRogueHelpers)

@@ -13,6 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mallos.Ai.Test", "test\Mall
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{686B955D-2972-44E6-9DBD-7BAD6C681387}"
 	ProjectSection(SolutionItems) = preProject
+		ChangeLog.md = ChangeLog.md
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -21,6 +22,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoRogueSample", "samples\GoRogueSample\GoRogueSample.csproj", "{6D061BDC-FBDE-4BA4-8297-9FF317B1AD4D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mallos.Ai.SadRogue", "src\Mallos.Ai.SadRogue\Mallos.Ai.SadRogue.csproj", "{3A05163A-22B9-4CC3-8E95-25992346D17E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DialogTreeSample", "samples\DialogTreeSample\DialogTreeSample.csproj", "{D43FC2CA-317B-4F2D-A754-A70CDAFA449A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mallos.Ai.Rant", "src\Mallos.Ai.Rant\Mallos.Ai.Rant.csproj", "{C9BCEAFA-E84C-4904-9135-02D0D3EB36CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +49,14 @@ Global
 		{3A05163A-22B9-4CC3-8E95-25992346D17E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A05163A-22B9-4CC3-8E95-25992346D17E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A05163A-22B9-4CC3-8E95-25992346D17E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D43FC2CA-317B-4F2D-A754-A70CDAFA449A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D43FC2CA-317B-4F2D-A754-A70CDAFA449A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D43FC2CA-317B-4F2D-A754-A70CDAFA449A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D43FC2CA-317B-4F2D-A754-A70CDAFA449A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9BCEAFA-E84C-4904-9135-02D0D3EB36CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9BCEAFA-E84C-4904-9135-02D0D3EB36CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9BCEAFA-E84C-4904-9135-02D0D3EB36CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9BCEAFA-E84C-4904-9135-02D0D3EB36CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +66,8 @@ Global
 		{4A46715F-08B2-4D28-A168-6D6283F577E7} = {A7F516EE-B925-4BC2-B35D-9BD1DFE8AC49}
 		{6D061BDC-FBDE-4BA4-8297-9FF317B1AD4D} = {32E8C64F-0AEB-4222-BCF6-0DD9E09A2DCE}
 		{3A05163A-22B9-4CC3-8E95-25992346D17E} = {39D7CB70-98D2-4E3C-9D0B-68033E86C586}
+		{D43FC2CA-317B-4F2D-A754-A70CDAFA449A} = {32E8C64F-0AEB-4222-BCF6-0DD9E09A2DCE}
+		{C9BCEAFA-E84C-4904-9135-02D0D3EB36CD} = {39D7CB70-98D2-4E3C-9D0B-68033E86C586}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4D1D27B2-00B1-4652-A93C-8A352929F9AF}
